@@ -31,7 +31,7 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
         {
           contains: ['morgental'],
           id: 'milchbuck_to_escher',
-          name: "Milchbuck to Escher-Wyss"
+          name: "Milchbuck to Escher"
         }
       ]
     }

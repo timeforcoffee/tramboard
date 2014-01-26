@@ -8,7 +8,7 @@ tramServices.factory('Tram', ['$resource',
         return _.map(data.stationboard, function(entry){
           var response = {
             departure: entry.stop.departure,
-            to: entry.to,
+            to: entry.to.replace("Z\u00FCrich, ", ""),
             number: entry.number
           }
           return response;

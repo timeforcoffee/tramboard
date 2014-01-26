@@ -1,15 +1,16 @@
 .number {
-	width: 72px!important;
+	width: 96px!important;
 }
 
 .number div {
-	font-size: 40px;
+	font-size: 48px;
 	font-weight: bold;
 	border: 1px solid black;
 	color: white;
-	width: 60px;
-	height: 60px;
+	width: 72px;
+	height: 72px;
 	text-align: center;
+	margin-top: 2px;
 }
 
 .number-14 {
@@ -33,6 +34,10 @@
 .tram-row {
 	padding: 8px;
 	margin: 4px;
+}
+
+.nav {
+	font-size: 16px;
 }
 
 #hirschi_to_city .tram-row.minutes-1, 
@@ -59,11 +64,11 @@
 }
 
 .destination {
-	font-size: 20px;
+	font-size: 28px;
 }
 
 .infos .minutes {
-	font-size: 24px;
+	font-size: 48px;
 	font-weight: bold;
 }
 
@@ -71,6 +76,7 @@
 	background: url('../images/tram.png') no-repeat;
 	text-indent: 9999px;
 	width: 42px;
-	height: 42px;
-	margin-left: 8%;
+	height: 62px;
+	margin-left: 5%;
+	margin-top: 16px;
 }
