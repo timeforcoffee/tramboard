@@ -11,12 +11,12 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
         {
           contains: ['bahnhof', 'triemli'],
           id: 'hirschi_to_city',
-          name: "Hirschi to city"
+          name: "Hirschi - city"
         },
         {
           contains: ['flughafen', 'seebach'],
           id: 'city_to_hirschi',
-          name: "City to Hirschi"
+          name: "City - Hirschi"
         }
       ]
     },
@@ -26,12 +26,12 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
         {
           contains: ['bahnhofplatz', 'wollishofen'],
           id: 'milchbuck_to_city',
-          name: "Milchbuck to city"
+          name: "Milchbuck - city"
         },
         {
           contains: ['morgental'],
           id: 'milchbuck_to_escher',
-          name: "Milchbuck to Escher"
+          name: "Milchbuck - Escher"
         }
       ]
     }
