@@ -1,0 +1,76 @@
+.number {
+	width: 72px!important;
+}
+
+.number div {
+	font-size: 40px;
+	font-weight: bold;
+	border: 1px solid black;
+	color: white;
+	width: 60px;
+	height: 60px;
+	text-align: center;
+}
+
+.number-14 {
+	background-color: #008dc5;
+	padding-right: 4px;
+}
+
+.number-10 {
+	background-color: #e12472;
+	padding-right: 4px;
+}
+
+.number-7 {
+	background-color: black;
+}
+
+.number-72 {
+	background-color: #c6a693;
+}
+
+.tram-row {
+	padding: 8px;
+	margin: 4px;
+}
+
+#hirschi_to_city .tram-row.minutes-1, 
+#hirschi_to_city .tram-row.minutes0, 
+#hirschi_to_city .tram-row.minutes1, 
+#hirschi_to_city .tram-row.minutes2,
+#hirschi_to_city .tram-row.minutes3,
+#city_to_hirschi .tram-row.minutes-1, 
+#city_to_hirschi .tram-row.minutes0, 
+#city_to_hirschi .tram-row.minutes1, 
+#city_to_hirschi .tram-row.minutes2,
+#city_to_hirschi .tram-row.minutes3 {
+	background-color: rgba(255, 128, 128, 0.7);
+}
+
+#hirschi_to_city .tram-row.minutes4,
+#city_to_hirschi .tram-row.minutes4 {
+	background-color: rgba(255, 255, 0, 0.7);
+}
+
+#hirschi_to_city .tram-row.minutes5,
+#city_to_hirschi .tram-row.minutes5 {
+	background-color: rgba(0, 255, 0, 0.6);
+}
+
+.destination {
+	font-size: 20px;
+}
+
+.infos .minutes {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.infos .minutes0, .infos .minutes-1 {
+	background: url('../images/tram.png') no-repeat;
+	text-indent: 9999px;
+	width: 42px;
+	height: 42px;
+	margin-left: 8%;
+}
