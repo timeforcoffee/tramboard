@@ -2,7 +2,7 @@ var tramControllers = angular.module('tramControllers', []);
 
 tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $timeout, Tram) {
 
-  $scope.refreshInterval = 2000;
+  $scope.refreshInterval = 10000;
 
   $scope.config = [
     {
