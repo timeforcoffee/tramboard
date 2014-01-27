@@ -9,12 +9,12 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
       station: 'Hirschwiesenstrasse',
       groups: [
         {
-          contains: ['bahnhof', 'triemli'],
+          contains: ['bahnhofplatz', 'triemli'],
           id: 'hirschi_to_city',
           name: "Hirschi - city"
         },
         {
-          contains: ['flughafen', 'seebach'],
+          contains: ['flughafen', 'seebach', 'oerlikon'],
           id: 'city_to_hirschi',
           name: "City - Hirschi"
         }
@@ -24,7 +24,7 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
       station: 'Milchbuck',
       groups: [
         {
-          contains: ['bahnhofplatz', 'wollishofen'],
+          contains: ['bahnhofplatz', 'wollishofen', 'triemli', 'heuried'],
           id: 'milchbuck_to_city',
           name: "Milchbuck - city"
         },
@@ -79,7 +79,7 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
           var group_trams = _.filter(trams, function(tram) {
 
             // we find any word in "contains" that matches the destination
-            // if it's more than 0, then we now it matches
+            // if it's more than 0, then we know it matches
             var found_words = _.find(group.contains, function(word) {
               // console.log("Checking if ", tram.to, " contains ", word);
 
