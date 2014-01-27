@@ -76,7 +76,7 @@
 	font-weight: bold;
 }
 
-.infos .minutes0, .infos .minutes-1 {
+.infos .minutes0, .infos .minutes-1, .infos .minutes-2 {
 	background: url('../images/tram.png') no-repeat;
 	text-indent: 9999px;
 	width: 42px;
