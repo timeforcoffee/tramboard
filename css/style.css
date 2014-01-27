@@ -1,40 +1,3 @@
-.number {
-	width: 96px!important;
-}
-
-.number div {
-	font-size: 48px;
-	font-weight: bold;
-	border: 1px solid black;
-	color: white;
-	width: 72px;
-	height: 72px;
-	text-align: center;
-	margin-top: 2px;
-}
-
-.number-14 {
-	background-color: #008dc5;
-	padding-right: 4px;
-}
-
-.number-10 {
-	background-color: #e12472;
-	padding-right: 4px;
-}
-
-.number-9 {
-	background-color: #11296f;
-}
-
-.number-7 {
-	background-color: black;
-}
-
-.number-72 {
-	background-color: #c6a693;
-}
-
 .tram-row {
 	padding: 8px;
 	margin: 4px;
@@ -68,19 +31,71 @@
 }
 
 .destination {
+	line-height: 72px;
+	height: 72px;
 	font-size: 28px;
 }
 
-.infos .minutes {
+.destination .number {
 	font-size: 48px;
 	font-weight: bold;
+	border: 1px solid black;
+	color: white;
+	width: 72px;
+	height: 72px;
+	text-align: center;
+	margin-right: 12px;
 }
 
-.infos .minutes0, .infos .minutes-1, .infos .minutes-2 {
-	background: url('../images/tram.png') no-repeat;
-	text-indent: 9999px;
-	width: 42px;
-	height: 62px;
-	margin-left: 4%;
-	margin-top: 16px;
+.destination > div {
+	float: left;
+}
+
+.number-14 {
+	background-color: #008dc5;
+	padding-right: 4px;
+}
+
+.number-10 {
+	background-color: #e12472;
+	padding-right: 4px;
+}
+
+.number-9 {
+	background-color: #11296f;
+}
+
+.number-7 {
+	background-color: black;
+}
+
+.number-72 {
+	background-color: #c6a693;
+}
+
+.infos .minutes {
+	line-height: 72px;
+}
+
+.infos .minutes div {
+	font-size: 48px;
+	font-weight: bold;
+	float: right;
+}
+
+.infos .minutes0 div,
+.infos .minutes-1 div,
+.infos .minutes-2 div {
+	display: none;
+}
+
+.infos img {
+	display: none;
+}
+
+.infos .minutes0 img,
+.infos .minutes-1 img,
+.infos .minutes-2 img {
+	display: inline;
+	position: relative;
 }

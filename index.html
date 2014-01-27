@@ -26,16 +26,17 @@
 
           <ul style="margin-top:20px" class="list-unstyled">
             <li ng-repeat="tram in (trams[view.id] | limitTo:6)">
-              <div class="row tram-row minutes{{tram.in_minutes}}">
-                <div class="col-xs-1 number">
-                  <div class="number-{{tram.number}}">{{tram.number}}</div>
+              <div class="row tram-row minutes{{tram.in_minutes}} infos">
+
+                <div class="col-xs-10 destination">
+                  <div class="number number-{{tram.number}}">{{tram.number}}</div>
+                  <div>{{tram.to}}</div>
                 </div>
-                <div class="col-xs-9">
-                  <div class="row infos">
-                    <div class="col-xs-10 destination"><p>{{tram.to}}</p></div>
-                    <div class="col-xs-2 minutes minutes{{tram.in_minutes}}"><p class="text-right">{{tram.in_minutes}}</p></div>
-                  </div>
+                <div class="col-xs-2 minutes minutes{{tram.in_minutes}} text-right">
+                  <img src="images/tram.png"></img>
+                  <div>{{tram.in_minutes}}</div>
                 </div>
+
               </div>
             </li>
           </ul>
