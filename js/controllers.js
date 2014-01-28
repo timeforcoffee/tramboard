@@ -100,8 +100,7 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
           _.each($scope.trams[group.id], function(element, index){
             _.extend(element, group_trams[index]);
 
-              var departure_time = new Date(element.departure);
-              var in_seconds = (departure_time - now) / 1000;
+              var in_seconds = (element.departure - now) / 1000;
 
               element.in_minutes = Math.floor(in_seconds / 60);
           })
