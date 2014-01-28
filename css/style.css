@@ -34,9 +34,14 @@
 	line-height: 72px;
 	height: 72px;
 	font-size: 20px;
+	position: relative;
+	padding: 0;
 }
 
 .destination .number {
+	position: absolute;
+	top: 0;
+	left: 0;
 	font-size: 48px;
 	font-weight: bold;
 	border: 1px solid black;
@@ -44,11 +49,10 @@
 	width: 72px;
 	height: 72px;
 	text-align: center;
-	margin-right: 12px;
 }
 
-.destination > div {
-	float: left;
+.destination .station {
+	margin-left: 84px;
 }
 
 .number-14 {
