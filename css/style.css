@@ -1,33 +1,41 @@
+body {
+	padding-top: 10px;
+}
+
 .nav {
 	font-size: 12px;
+	width: 100%;
+	margin-right: 15px;
+}
+
+.nav .settings-icon {
+	margin-right: 4px;
+	margin-left: 8px;
+}
+
+.nav .settings-icon > a {
+	padding: 0 10px;
+}
+
+.nav .settings-icon span {
+	font-size: 18px;
+	line-height: 37px;
+}
+
+@media (min-width: 768px) {
+	.nav .settings-icon {
+		margin-right: 8px;
+	}
+
+	.nav .settings-icon span {
+		font-size: 20px;
+	}
 }
 
 .tram-row {
 	padding: 8px;
 	margin: 4px;
-}
-
-#hirschi_to_city .tram-row-1, 
-#hirschi_to_city .tram-row0, 
-#hirschi_to_city .tram-row1, 
-#hirschi_to_city .tram-row2,
-#hirschi_to_city .tram-row3,
-#city_to_hirschi .tram-row-1, 
-#city_to_hirschi .tram-row0, 
-#city_to_hirschi .tram-row1, 
-#city_to_hirschi .tram-row2,
-#city_to_hirschi .tram-row3 {
-	background-color: rgba(255, 128, 128, 0.7);
-}
-
-#hirschi_to_city .tram-row4,
-#city_to_hirschi .tram-row4 {
-	background-color: rgba(255, 255, 0, 0.7);
-}
-
-#hirschi_to_city .tram-row5,
-#city_to_hirschi .tram-row5 {
-	background-color: rgba(0, 255, 0, 0.6);
+	border-radius: 4px;
 }
 
 .destination {
@@ -44,7 +52,7 @@
 	left: 0;
 	font-size: 48px;
 	font-weight: bold;
-	border: 1px solid black;
+	border-radius: 4px;
 	color: white;
 	width: 72px;
 	height: 72px;
@@ -56,17 +64,17 @@
 }
 
 .number-14 {
-	background-color: #008dc5;
+	background-color: #00A4DB;
 	padding-right: 4px;
 }
 
 .number-10 {
-	background-color: #e12472;
+	background-color: #DA3987;
 	padding-right: 4px;
 }
 
 .number-9 {
-	background-color: #11296f;
+	background-color: #3E4085;
 }
 
 .number-7 {
@@ -108,4 +116,29 @@
 .departure {
 	line-height: 72px;
 	font-size: 28px;
+}
+
+/* Station specific styles: 
+   Colors for Hirschi rows */
+#hirschi_to_city .tram-row-1, 
+#hirschi_to_city .tram-row0, 
+#hirschi_to_city .tram-row1, 
+#hirschi_to_city .tram-row2,
+#hirschi_to_city .tram-row3,
+#city_to_hirschi .tram-row-1, 
+#city_to_hirschi .tram-row0, 
+#city_to_hirschi .tram-row1, 
+#city_to_hirschi .tram-row2,
+#city_to_hirschi .tram-row3 {
+	background-color: rgba(255, 128, 128, 0.7);
+}
+
+#hirschi_to_city .tram-row4,
+#city_to_hirschi .tram-row4 {
+	background-color: rgba(255, 255, 0, 0.7);
+}
+
+#hirschi_to_city .tram-row5,
+#city_to_hirschi .tram-row5 {
+	background-color: rgba(0, 255, 0, 0.6);
 }

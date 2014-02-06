@@ -1,63 +1,30 @@
 var tramControllers = angular.module('tramControllers', []);
 
-tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $timeout, Tram) {
+tramApp.controller('ListCtrl', ['$scope', 'storage', function($scope, $timeout, storage) {
+  // actually no need for much here yet
+}]);
+
+tramApp.controller('CreateCtrl', ['$scope', 'Tram', 'storage', function($scope, Tram, storage) {
+  // this is the controller for editing the config
+
+  $scope.save = function() {
+    console.log("Creating ", $scope.view);
+  }
+
+}]);
+
+tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', 'storage', function($scope, $timeout, Tram, storage) {
 
   $scope.refreshInterval = 10000;
-
-  $scope.config = [
-    {
-      station: 'Hirschwiesenstrasse',
-      groups: [
-        {
-          contains: ['bahnhofplatz', 'triemli'],
-          id: 'hirschi_to_city',
-          name: "Hirschi - city"
-        },
-        {
-          contains: ['flughafen', 'seebach', 'oerlikon'],
-          id: 'city_to_hirschi',
-          name: "City - Hirschi"
-        }
-      ]
-    },
-    {
-      station: 'Milchbuck',
-      groups: [
-        {
-          contains: ['bahnhofplatz', 'wollishofen', 'triemli', 'heuried'],
-          id: 'milchbuck_to_city',
-          name: "Milchbuck - city"
-        },
-        {
-          contains: ['morgental'],
-          id: 'milchbuck_to_escher',
-          name: "Milchbuck - Escher"
-        }
-      ]
-    }
-  ]
-
-  // variable to hold only a singleton of possibleViews()
-  $scope.views = null;
-  $scope.possibleViews = function() {
-    if ($scope.views == null) {
-      var result = _.map($scope.config, function(station) {
-        return _.map(station.groups, function(group) {
-          return {
-            id: group.id,
-            name: group.name
-          }
-        })
-      })
-      $scope.views = _.flatten(result);
-    }
-    return $scope.views;
-  };
 
   /**
    * We initialize the model with 50 empty trams for each destination.
    */
   $scope.trams = {};
+
+  $scope.possibleViews = function() {
+    return storage.possibleViews();
+  };
 
   /**
    * We regularly update the model with the new departures.
@@ -67,7 +34,10 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', function($scope, $
     var now = Date.now();
 
     console.log($scope.trams);
-    _.each($scope.config, function(query){
+
+    var stationsToQuery = storage.stationsToQuery();
+    console.log("Querying stations: ", stationsToQuery);
+    _.each(stationsToQuery, function(query){
       // for each possible query
       Tram.query({station:query.station}, function(trams){
         console.log("Handling answer for station: ", query.station, ", groups: ", query.groups, ", answer: ", trams);
