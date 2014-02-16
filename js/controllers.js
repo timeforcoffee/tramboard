@@ -1,24 +1,50 @@
 var tramControllers = angular.module('tramControllers', []);
 
-tramApp.controller('ListCtrl', ['$scope', 'storage', function($scope, $timeout, storage) {
+tramApp.controller('ListCtrl', ['$scope', 'Tram', 'storage', function($scope, Tram, storage) {
   // actually no need for much here yet
-}]);
 
-tramApp.controller('CreateCtrl', ['$scope', 'Tram', 'storage', function($scope, Tram, storage) {
-  // this is the controller for editing the config
+  $scope.switch = function(id) {
+    console.log("Switching to ", id);
+    $scope.view = _.clone(storage.getView(id));
+    console.log("$scope.view: ", $scope.view);
+  }
 
   $scope.save = function() {
-    console.log("Creating ", $scope.view);
+    console.log("Saving ", $scope.view);
+    storage.saveView($scope.view);
+  }
+
+  $scope.delete = function() {
+    console.log("Deleting ", $scope.view);
+    storage.deleteView($scope.view);
+    $scope.view = null;
+  }
+
+  $scope.getStations = function(text) {
+    console.log("Autocomplete: ", text);
+
+    return Tram.autocomplete({query:text}).$promise.then(function(stations){
+      console.log("Got stations: ", stations);
+      
+      var result = _.map(stations.stations, function(station){
+        return {
+          name: station.name,
+          id: station.id
+        };
+      })
+      console.log("Autocomplete: ", result);
+      return result;
+    });
   }
 
 }]);
 
-tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', 'storage', function($scope, $timeout, Tram, storage) {
+tramApp.controller('TramCtrl', ['$scope', '$timeout', 'storage', function($scope, $timeout, storage) {
 
   $scope.refreshInterval = 10000;
 
   /**
-   * We initialize the model with 50 empty trams for each destination.
+   * We initialize the model with nothing
    */
   $scope.trams = {};
 
@@ -37,9 +63,10 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', 'storage', functio
 
     var stationsToQuery = storage.stationsToQuery();
     console.log("Querying stations: ", stationsToQuery);
+
     _.each(stationsToQuery, function(query){
       // for each possible query
-      Tram.query({station:query.station}, function(trams){
+      storage.queryStation(query.station, function(trams) {
         console.log("Handling answer for station: ", query.station, ", groups: ", query.groups, ", answer: ", trams);
 
         // we iterate over each possible group and fill the trams array
@@ -53,10 +80,10 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', 'storage', functio
             var found_words = _.find(group.contains, function(word) {
               // console.log("Checking if ", tram.to, " contains ", word);
 
-              return tram.to.toLowerCase().indexOf(word) != -1
+              return tram.to.toLowerCase().indexOf(word.trim().toLowerCase()) != -1
             });
             // console.log("Found words ", found_words, " for ", tram.to)
-            return found_words != undefined && found_words.length > 0;
+            return group.contains.length == 0 || (found_words != undefined && found_words.length > 0);
           })
 
           console.log("Found trams for station ", query.station, ", and for group ", group.id, ": ", group_trams);
@@ -71,7 +98,6 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'Tram', 'storage', functio
             _.extend(element, group_trams[index]);
 
               var in_seconds = (element.departure - now) / 1000;
-
               element.in_minutes = Math.floor(in_seconds / 60);
           })
 

@@ -3,5 +3,6 @@
 var tramApp = angular.module('tramApp', [
 	'LocalStorageModule', 
 	'tramServices', 
-	'tramControllers'
+	'tramControllers',
+	'ui.bootstrap'
 ])

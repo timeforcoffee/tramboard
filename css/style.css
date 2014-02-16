@@ -53,7 +53,6 @@ body {
 	font-size: 48px;
 	font-weight: bold;
 	border-radius: 4px;
-	color: white;
 	width: 72px;
 	height: 72px;
 	text-align: center;
@@ -64,24 +63,34 @@ body {
 }
 
 .number-14 {
+	color: white;
 	background-color: #00A4DB;
 	padding-right: 4px;
 }
 
 .number-10 {
+	color: white;
 	background-color: #DA3987;
 	padding-right: 4px;
 }
 
 .number-9 {
+	color: white;
 	background-color: #3E4085;
 }
 
 .number-7 {
+	color: white;
 	background-color: black;
 }
 
+.number-69 {
+	color: white;
+	background-color: #c6a693;
+}
+
 .number-72 {
+	color: white;
 	background-color: #c6a693;
 }
 
@@ -116,6 +125,20 @@ body {
 .departure {
 	line-height: 72px;
 	font-size: 28px;
+	text-align: right;
+}
+
+.departure.delayed-departure {
+	line-height: inherit;
+}
+
+.undelayed {
+	font-size: 16px;
+	font-style: italic;
+}
+
+.settings {
+	margin-top: 4px;
 }
 
 /* Station specific styles: 

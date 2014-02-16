@@ -5,26 +5,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-resource.min.js"></script>
     <script src="js/angular-local-storage.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
 
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
 
     <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="http://chancejs.com/chance.min.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="css/style.css"></link>
+
+    <title>Tramboard</title>
   </head>
   <body>
     <div ng-controller="TramCtrl" class="container">
       <ul class="nav nav-tabs">
-        <li class="settings-icon">
+        <li class="settings-icon active">
           <a href="#settings" data-toggle="tab">
             <span class="glyphicon glyphicon-cog"></span>
           </a>
         </li>
-        <li ng-repeat="view in possibleViews()" ng-class="{active : $first}" >
+        <li ng-repeat="view in possibleViews()">
           <a href="#{{view.id}}" data-toggle="tab">{{view.name}}</a>
         </li>
       </ul>
@@ -33,58 +37,61 @@
       <div class="tab-content clearfix">
 
         <!-- this is the settings page -->
-        <div class="tab-pane fade" id="settings" ng-controller="ListCtrl">
-          <ul class="list-unstyled">
-            <li ng-repeat="view in possibleViews()">
-              <span>{{view.name}}</span>
-              <a href="">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </a>
-            </li>
-            <li>
-              <a href="">
+        <div class="tab-pane fade active in" id="settings" ng-controller="ListCtrl">
+          <div class="row settings">
+
+            <div class="col-sm-4">
+
+              <h4>Existing views</h4>
+
+              <ul class="list-unstyled">
+                <li ng-repeat="view in possibleViews()">
+                  <a href="#" ng-click="switch(view.id)">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </a>
+                  <span>{{view.name}}</span>
+                </li>
+              </ul>
+
+              <a href="#" ng-click="switch()">
+                <span class="glyphicon-plus"></span>
                 new view
               </a>
-            </li>
-          </ul>
+            </div>
 
-          <div ng-controller="CreateCtrl">
-            
-            <form name="newViewForm">
+            <div class="col-sm-8">
+              <form name="newViewForm">
 
-              <div class="row">
-                <div class="col-xs-6 input-group">
-                  <input ng-model="view.name" type="text" class="form-control" placeholder="View name"></input>
+                <h4 ng-show="view.id">Edit view {{view.name}}</h4>
+                <h4 ng-show="!view.id">Add a new view</h4>
+
+                <div class="form-group">
+                  <label for="viewName">Name</label>
+                  <input id="viewName" ng-model="view.name" type="text" class="form-control" placeholder="View name (displayed in the tab)" required></input>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-xs-6 input-group">
-                  <input ng-model="view.station" type="text" class="form-control" placeholder="Station name"></input>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default">Default button</button>
-                  </span>
+                <div class="form-group">
+                  <label for="viewStation">Station</label>
+                  <input id="viewStation" ng-model="view.station" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as station.name for station in getStations($viewValue) | filter:$viewValue" typeahead-loading="loadingStations" required></input>
+                  <i ng-show="loadingStations" class="glyphicon glyphicon-refresh"></i>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-xs-6 input-group">
-                  <input ng-model="view.keywords" type="text" class="form-control" placeholder="Keywords"></input>
+                <div class="form-group">
+                  <label for="viewKeywords">Keywords</label>
+                  <input id="viewKeywords" ng-model="view.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
                 </div>
-              </div>
 
-              <div class="row">
                 <button ng-click="save()" ng-disabled="newViewForm.$invalid" class="btn btn-primary">Save</button>
-                <button ng-click="destroy()" ng-show="project.$remove" class="btn btn-danger">Delete</button>
-              </div>
+                <button ng-click="delete()" ng-show="view.id" class="btn btn-danger">Delete</button>
 
-            </form>
+              </form>
+            </div>
 
           </div>
         </div>
 
         <!-- these are all the configured station tabs -->
-        <div class="tab-pane fade" ng-class="{'active in' : $first}" ng-repeat="view in possibleViews()" id="{{view.id}}">
+        <div class="tab-pane fade" ng-repeat="view in possibleViews()" id="{{view.id}}">
 
           <ul class="list-unstyled">
             <li ng-repeat="tram in (trams[view.id] | limitTo:6)">
@@ -95,7 +102,10 @@
                   <div class="station">{{tram.to}}</div>
                 </div>
 
-                <div class="col-xs-2 departure">{{tram.departure.getHours()}}:{{tram.departure.getMinutes().toString().length == 1 ? '0'+tram.departure.getMinutes() : tram.departure.getMinutes()}}</div>
+                <div class="col-xs-2 departure {{tram.undelayed.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
+                  <div>{{tram.departure.getHours()}}:{{tram.departure.getMinutes().toString().length == 1 ? '0'+tram.departure.getMinutes() : tram.departure.getMinutes()}}</div>
+                  <div class="undelayed">{{(tram.undelayed.getTime() != tram.departure.getTime()) ? (tram.undelayed.getHours()+':'+(tram.undelayed.getMinutes().toString().length == 1 ? '0'+tram.undelayed.getMinutes() : tram.undelayed.getMinutes())) : ''}}</div>
+                </div>
 
                 <div class="col-xs-2 text-right time time{{tram.in_minutes}}">
                   <img src="images/tram.png"></img>
@@ -105,9 +115,10 @@
               </div>
             </li>
           </ul>
-
         </div>
       </div>
+
     </div>
+
   </body>
 </html>
