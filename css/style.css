@@ -46,6 +46,10 @@ body {
 	padding: 0;
 }
 
+.destination .station {
+	margin-left: 84px;
+}
+
 .destination .number {
 	position: absolute;
 	top: 0;
@@ -56,42 +60,125 @@ body {
 	width: 72px;
 	height: 72px;
 	text-align: center;
+	color: black;
+	background: white;
 }
 
-.destination .station {
-	margin-left: 84px;
+.destination .number-night {
+	color: #fff100;
+	background-color: black;
 }
 
-.number-14 {
+.destination .number-2 {
 	color: white;
-	background-color: #00A4DB;
-	padding-right: 4px;
+	background-color: #e20a16;
 }
 
-.number-10 {
+.destination .number-3 {
 	color: white;
-	background-color: #DA3987;
-	padding-right: 4px;
+	background-color: #00892f;
 }
 
-.number-9 {
+.destination .number-4 {
 	color: white;
-	background-color: #3E4085;
+	background-color: #11296f;
 }
 
-.number-7 {
+.destination .number-5 {
+	color: white;
+	background-color: #734522;
+}
+
+.destination .number-6 {
+	color: white;
+	background-color: #ca7d3c;
+}
+
+.destination .number-7 {
 	color: white;
 	background-color: black;
 }
 
-.number-69 {
+.destination .number-8 {
+	color: black;
+	background-color: #8ab51f;
+}
+
+.destination .number-9 {
+	color: white;
+	background-color: #11296f;
+}
+
+.destination .number-10 {
+	color: white;
+	background-color: #e12472;
+	padding-right: 4px;
+}
+
+.destination .number-11 {
+	color: white;
+	background-color: #00892f;
+}
+
+.destination .number-12 {
+	color: black;
+	background-color: #5eb3db;
+}
+
+.destination .number-13 {
+	color: black;
+	background-color: #ffc100;
+}
+
+.destination .number-14 {
+	color: white;
+	background-color: #008dc5;
+	padding-right: 4px;
+}
+
+.destination .number-15 {
+	color: white;
+	background-color: #e20a16;
+}
+
+.destination .number-17 {
+	color: white;
+	background-color: #8e224d;
+}
+
+.destination .number-31 {
+	color: white;
+	background-color: #a5a2c6;
+}
+
+.destination .number-32 {
+	color: black;
+	background-color: #ccb2d1;
+}
+
+.destination .number-33 {
+	color: black;
+	background-color: #dad69c;
+}
+
+.destination .number-46 {
+	color: black;
+	background-color: #c1d59f;
+}
+
+.destination .number-69 {
 	color: white;
 	background-color: #c6a693;
 }
 
-.number-72 {
-	color: white;
+.destination .number-72 {
+	color: black;
 	background-color: #c6a693;
+}
+
+.destination .number-80 {
+	color: black;
+	background-color: #cbcfb3;
 }
 
 .time {
