@@ -17,13 +17,19 @@ tramServices.factory('Tram', ['$resource',
           var departure = new Date(dateItems[1]+'/'+dateItems[0]+'/'+dateItems[2]+' '+entry.rt.dlt);
           var undelayed = new Date(dateItems[1]+'/'+dateItems[0]+'/'+dateItems[2]+' '+entry.ti);
 
+          var special;
+          var number = entry.pr.replace(/ /g, '');
+          if (number.charAt(0) == "N") special = "night";
+          if (number.length == 3) special += " small";
+
           if (!departure || !departure.getFullYear()) departure = undelayed;
 
           var response = {
             departure: departure,
             undelayed: undelayed,
             to: entry.st.replace("Z\u00FCrich, ", ""),
-            number: entry.pr.replace(/ /g, '')
+            number: number,
+            special: special
           }
           return response;
         });
