@@ -64,9 +64,13 @@ body {
 	background: white;
 }
 
-.destination .number-night {
+.destination .night {
 	color: #fff100;
 	background-color: black;
+}
+
+.destination .small {
+	font-size: 32px;
 }
 
 .destination .number-2 {
