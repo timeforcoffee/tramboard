@@ -160,39 +160,6 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
         });
       },
 
-      /* var config = [
-      {
-        station: 'Hirschwiesenstrasse',
-        groups: [
-          {
-            contains: ['bahnhofplatz', 'triemli'],
-            id: 'hirschi_to_city',
-            name: "Hirschi - city"
-          },
-          {
-            contains: ['flughafen', 'seebach', 'oerlikon'],
-            id: 'city_to_hirschi',
-            name: "City - Hirschi"
-          }
-        ]
-      },
-      {
-        station: 'Milchbuck',
-        groups: [
-          {
-            contains: ['bahnhofplatz', 'wollishofen', 'triemli', 'heuried'],
-            id: 'milchbuck_to_city',
-            name: "Milchbuck - city"
-          },
-          {
-            contains: ['morgental'],
-            id: 'milchbuck_to_escher',
-            name: "Milchbuck - Escher"
-          }
-        ]
-      }
-      ]; */
-
       stationsToQuery: stationsToQuery
 
     }
