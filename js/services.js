@@ -14,8 +14,8 @@ tramServices.factory('Tram', ['$resource',
         return _.map(response.journey, function(entry){
           var dateItems = entry.da.split('.');
 
-          var departure = new Date(dateItems[1]+'/'+dateItems[0]+'/'+dateItems[2]+' '+entry.rt.dlt);
-          var undelayed = new Date(dateItems[1]+'/'+dateItems[0]+'/'+dateItems[2]+' '+entry.ti);
+          var departure = new Date(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.rt.dlt);
+          var undelayed = new Date(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.ti);
 
           var special;
           var number = entry.pr.replace(/ /g, '');
@@ -161,7 +161,6 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
       },
 
       stationsToQuery: stationsToQuery
-
     }
   }
 
