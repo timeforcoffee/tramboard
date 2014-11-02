@@ -207,6 +207,10 @@ body {
 	padding-right: 0;
 }
 
+.time.small div {
+	font-size: 3em;
+}
+
 .time div {
 	font-size: 4em;
 	font-weight: bold;
