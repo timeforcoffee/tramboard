@@ -68,11 +68,11 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
    */
   $scope.trams = {};
 
-  $scope.hjs = HueJS({
+  /*$scope.hjs = HueJS({
             ipAddress:"10.10.0.195",
                 devicetype:"test user",
                 username: "newdeveloper"
-            });
+            });*/
 
   /**
    * We regularly update the model with the new departures.
@@ -125,7 +125,7 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
           })
 
           // we set the light
-          var firstTram;
+          /*var firstTram;
           if ($scope.trams[$scope.viewId]) {
             var tramsBwn3and4Min = _.filter($scope.trams[$scope.viewId], function(tram) {
               return (tram.in_minutes <= 4 && tram.in_minutes >=3);
@@ -143,7 +143,7 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
           else {
             console.log("Setting lamp to white");
             $scope.hjs.setValue(2, {ct: 330})
-          }
+          }*/
         })
 
       })
