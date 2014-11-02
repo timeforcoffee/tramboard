@@ -11,6 +11,7 @@ tramServices.factory('Tram', ['$resource',
         var response = JSON.parse(data.replace('journeysObj = ', ''));
         console.log("Parsed response: ", response);
 
+        // TODO move this logic on the server
         return _.map(response.journey, function(entry){
           var dateItems = entry.da.split('.');
 
@@ -133,31 +134,8 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
       return views;
     }
 
-    var stations = null;
-
-    function stationsToQuery() {
-      if (stations == null) {
-        stations = _.map(_.groupBy(getConfig(), function(view){
-          return view.station.id;
-        }), function(group, key) {
-          return {
-            station: key,
-            groups: _.map(group, function(view) {
-              return {
-                contains: view.keywords == undefined ? [] : view.keywords.split(','),
-                id: view.id,
-                name: view.name
-              }
-            })
-          }
-        })
-      }
-      return stations;
-    }
-
     function clearCache() {
       views = null;
-      stations = null;
     }
 
     return {
@@ -213,7 +191,6 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
         });
       },
 
-      stationsToQuery: stationsToQuery
     }
   }
 

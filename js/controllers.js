@@ -83,71 +83,67 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
 
     console.log($scope.trams);
 
-    var stationsToQuery = storage.stationsToQuery();
-    console.log("Querying stations: ", stationsToQuery);
+    // if the view is set
+    if ($scope.viewId) {
+      var currentView = storage.getView($routeParams.viewId);
 
-    _.each(stationsToQuery, function(query){
-      // for each possible query
-      storage.queryStation(query.station, function(trams) {
-        console.log("Handling answer for station: ", query.station, ", groups: ", query.groups, ", answer: ", trams);
+      storage.queryStation(currentView.station.id, function(trams) {
+        console.log("Handling answer for station: ", currentView.station, ", answer: ", trams);
 
-        // we iterate over each possible group and fill the trams array
-        _.each(query.groups, function(group) {
+        // we get the elements of the group in the group_trams variable
+        var group_trams = _.filter(trams, function(tram) {
+          var keywords = currentView.keywords.split(',')
 
-          // we get the elements of the group in the group_trams variable
-          var group_trams = _.filter(trams, function(tram) {
+          // we find any word in "contains" that matches the destination
+          // if it's more than 0, then we know it matches
+          var found_words = _.find(keywords, function(word) {
+            // console.log("Checking if ", tram.to, " contains ", word);
 
-            // we find any word in "contains" that matches the destination
-            // if it's more than 0, then we know it matches
-            var found_words = _.find(group.contains, function(word) {
-              // console.log("Checking if ", tram.to, " contains ", word);
-
-              return tram.to.toLowerCase().indexOf(word.trim().toLowerCase()) != -1
-            });
-            // console.log("Found words ", found_words, " for ", tram.to)
-            return group.contains.length == 0 || (found_words != undefined && found_words.length > 0);
-          })
-
-          console.log("Found trams for station ", query.station, ", and for group ", group.id, ": ", group_trams);
-
-          // this is to initialize scope.trams if it's not done yet (first time this is executed)
-          if (!(group.id in $scope.trams)) {
-            $scope.trams[group.id] = group_trams
-          }
-
-          // we extend the tram list with the new tram stuff
-          _.each($scope.trams[group.id], function(element, index){
-            _.extend(element, group_trams[index]);
-
-              var in_seconds = (element.departure - now) / 1000;
-              element.in_minutes = Math.floor(in_seconds / 60) % 60;
-              element.in_hours = Math.floor(Math.floor(in_seconds / 60) / 60);
-          })
-
-          // we set the light
-          /*var firstTram;
-          if ($scope.trams[$scope.viewId]) {
-            var tramsBwn3and4Min = _.filter($scope.trams[$scope.viewId], function(tram) {
-              return (tram.in_minutes <= 4 && tram.in_minutes >=3);
-            })
-            // we found a tram
-            if (tramsBwn3and4Min.length > 0) {
-              firstTram = tramsBwn3and4Min[0];
-            }
-          }
-          if (firstTram && (firstTram.number == 10 || firstTram.number == 14)) {
-            console.log("Setting lamp to colored");
-            var hue = firstTram.number == 10 ? 62031 : 47124;
-            $scope.hjs.setValue(2, {hue: hue})
-          }
-          else {
-            console.log("Setting lamp to white");
-            $scope.hjs.setValue(2, {ct: 330})
-          }*/
+            return tram.to.toLowerCase().indexOf(word.trim().toLowerCase()) != -1
+          });
+          // console.log("Found words ", found_words, " for ", tram.to)
+          return keywords.length == 0 || (found_words != undefined && found_words.length > 0);
         })
 
+        console.log("Found trams for station ", currentView.station, ": ", group_trams);
+
+        // this is to initialize scope.trams if it's not done yet (first time this is executed)
+        if (!(currentView.id in $scope.trams)) {
+          $scope.trams[currentView.id] = group_trams
+        }
+
+        // we extend the tram list with the new tram stuff
+        _.each($scope.trams[currentView.id], function(element, index){
+          _.extend(element, group_trams[index]);
+
+            var in_seconds = (element.departure - now) / 1000;
+            element.in_minutes = Math.floor(in_seconds / 60) % 60;
+            element.in_hours = Math.floor(Math.floor(in_seconds / 60) / 60);
+        })
+
+        // we set the light
+        /*var firstTram;
+        if ($scope.trams[$scope.viewId]) {
+          var tramsBwn3and4Min = _.filter($scope.trams[$scope.viewId], function(tram) {
+            return (tram.in_minutes <= 4 && tram.in_minutes >=3);
+          })
+          // we found a tram
+          if (tramsBwn3and4Min.length > 0) {
+            firstTram = tramsBwn3and4Min[0];
+          }
+        }
+        if (firstTram && (firstTram.number == 10 || firstTram.number == 14)) {
+          console.log("Setting lamp to colored");
+          var hue = firstTram.number == 10 ? 62031 : 47124;
+          $scope.hjs.setValue(2, {hue: hue})
+        }
+        else {
+          console.log("Setting lamp to white");
+          $scope.hjs.setValue(2, {ct: 330})
+        }*/
+
       })
-    })
+    }
 
   }())
 
