@@ -35,7 +35,7 @@ tramServices.factory('Tram', ['$resource',
         });
       }},
 
-      queryOpenTransport: {method:'GET', url: 'http://transport.opendata.ch/v1/stationboard?station=:station', params:{station:'station'}, responseType: 'json', isArray:true, transformResponse: function(data, headers){
+      queryOpenTransport: {method:'GET', url: '//transport.opendata.ch/v1/stationboard?station=:station', params:{station:'station'}, responseType: 'json', isArray:true, transformResponse: function(data, headers){
         return _.map(data.stationboard, function(entry){
           var response = {
             departure: new Date(entry.stop.departure),
@@ -47,7 +47,7 @@ tramServices.factory('Tram', ['$resource',
         });
       }},
 
-      autocomplete: {method:'GET', url:'http://transport.opendata.ch/v1/locations?query=:query&type=station', params:{query:'query'}, responseType: 'json', isArray: false}
+      autocomplete: {method:'GET', url:'//transport.opendata.ch/v1/locations?query=:query&type=station', params:{query:'query'}, responseType: 'json', isArray: false}
     });
   }
 
