@@ -2,17 +2,23 @@
 <html ng-app="tramApp" lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-route.min.js"></script>
+
     <script src="js/angular-local-storage.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
 
+    <script src="js/huejs.js"></script>
+    
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/components.js"></script>
     <script src="js/services.js"></script>
 
+
     <script src="http://underscorejs.org/underscore-min.js"></script>
-    <script src="http://chancejs.com/chance.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/speakingurl/0.16.0/speakingurl.min.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"></link>
@@ -21,104 +27,9 @@
     <title>Tramboard</title>
   </head>
   <body>
-    <div ng-controller="TramCtrl" class="container">
-      <ul class="nav nav-tabs">
-        <li class="settings-icon active">
-          <a href="#settings" data-toggle="tab">
-            <span class="glyphicon glyphicon-cog"></span>
-          </a>
-        </li>
-        <li ng-repeat="view in possibleViews()">
-          <a href="#{{view.id}}" data-toggle="tab">{{view.name}}</a>
-        </li>
-      </ul>
+    <div class="container">
 
-
-      <div class="tab-content clearfix">
-
-        <!-- this is the settings page -->
-        <div class="tab-pane fade active in" id="settings" ng-controller="ListCtrl">
-          <div class="row settings">
-
-            <div class="col-sm-4">
-
-              <h4>Existing views</h4>
-
-              <ul class="list-unstyled">
-                <li ng-repeat="view in possibleViews()">
-                  <a href="#" ng-click="switch(view.id)">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                  </a>
-                  <span>{{view.name}}</span>
-                </li>
-              </ul>
-
-              <a href="#" ng-click="switch()">
-                <span class="glyphicon-plus"></span>
-                new view
-              </a>
-            </div>
-
-            <div class="col-sm-8">
-              <form name="newViewForm">
-
-                <h4 ng-show="view.id">Edit view {{view.name}}</h4>
-                <h4 ng-show="!view.id">Add a new view</h4>
-
-                <div class="form-group">
-                  <label for="viewName">Name</label>
-                  <input id="viewName" ng-model="view.name" type="text" class="form-control" placeholder="View name (displayed in the tab)" required></input>
-                </div>
-
-                <div class="form-group">
-                  <label for="viewStation">Station</label>
-                  <input id="viewStation" ng-model="view.station" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as station.name for station in getStations($viewValue) | filter:$viewValue" typeahead-loading="loadingStations" required></input>
-                  <i ng-show="loadingStations" class="glyphicon glyphicon-refresh"></i>
-                </div>
-
-                <div class="form-group">
-                  <label for="viewKeywords">Keywords</label>
-                  <input id="viewKeywords" ng-model="view.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
-                </div>
-
-                <button ng-click="save()" ng-disabled="newViewForm.$invalid" class="btn btn-primary">Save</button>
-                <button ng-click="delete()" ng-show="view.id" class="btn btn-danger">Delete</button>
-
-              </form>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- these are all the configured station tabs -->
-        <div class="tab-pane fade" ng-repeat="view in possibleViews()" id="{{view.id}}">
-
-          <ul class="list-unstyled">
-            <li ng-repeat="tram in (trams[view.id] | limitTo:6)">
-              <div class="row tram-row tram-row{{tram.in_minutes}}">
-
-                <div class="col-xs-8 destination">
-                  <div class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</div>
-                  <div class="station">{{tram.to}}</div>
-                </div>
-
-                <div class="col-xs-2 departure {{tram.undelayed.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
-                  <div>{{tram.departure.getHours()}}:{{tram.departure.getMinutes().toString().length == 1 ? '0'+tram.departure.getMinutes() : tram.departure.getMinutes()}}</div>
-                  <div class="undelayed">{{(tram.undelayed.getTime() != tram.departure.getTime()) ? (tram.undelayed.getHours()+':'+(tram.undelayed.getMinutes().toString().length == 1 ? '0'+tram.undelayed.getMinutes() : tram.undelayed.getMinutes())) : ''}}</div>
-                </div>
-
-                <div class="col-xs-2 text-right time time{{tram.in_minutes}}">
-                  <img src="images/tram.png"></img>
-                  <div>{{tram.in_minutes}}</div>
-                </div>
-
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
+      <div ng-view></div>
     </div>
-
   </body>
 </html>

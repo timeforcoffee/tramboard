@@ -1,17 +1,36 @@
-var tramControllers = angular.module('tramControllers', []);
+var tramControllers = angular.module('tramControllers', ['ngRoute']);
 
-tramApp.controller('ListCtrl', ['$scope', 'Tram', 'storage', function($scope, Tram, storage) {
+tramApp.config(function($routeProvider) {
+  $routeProvider
+    .when('/new', {
+      controller:'EditCtrl',
+      templateUrl:'edit.html'
+    })
+    .when('/view/:viewId', {
+      controller:'TramCtrl',
+      templateUrl:'tram.html'
+    })
+
+    .when('/edit/:viewId', {
+      controller:'EditCtrl',
+      templateUrl:'edit.html'
+    })
+
+    .otherwise({
+      redirectTo:'/new'
+    });
+})
+
+tramApp.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Tram', 'storage', function($scope, $location, $routeParams, Tram, storage) {
   // actually no need for much here yet
 
-  $scope.switch = function(id) {
-    console.log("Switching to ", id);
-    $scope.view = _.clone(storage.getView(id));
-    console.log("$scope.view: ", $scope.view);
-  }
+  $scope.viewId = $routeParams.viewId;
+  $scope.view = _.clone(storage.getView($routeParams.viewId));
 
   $scope.save = function() {
     console.log("Saving ", $scope.view);
     storage.saveView($scope.view);
+    $location.path('/view/' + $scope.view.id);
   }
 
   $scope.delete = function() {
@@ -39,8 +58,9 @@ tramApp.controller('ListCtrl', ['$scope', 'Tram', 'storage', function($scope, Tr
 
 }]);
 
-tramApp.controller('TramCtrl', ['$scope', '$timeout', 'storage', function($scope, $timeout, storage) {
+tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage', function($scope, $routeParams, $timeout, storage) {
 
+  $scope.viewId = $routeParams.viewId;
   $scope.refreshInterval = 10000;
 
   /**
@@ -48,9 +68,11 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'storage', function($scope
    */
   $scope.trams = {};
 
-  $scope.possibleViews = function() {
-    return storage.possibleViews();
-  };
+  $scope.hjs = HueJS({
+            ipAddress:"10.10.0.195",
+                devicetype:"test user",
+                username: "newdeveloper"
+            });
 
   /**
    * We regularly update the model with the new departures.
@@ -98,9 +120,30 @@ tramApp.controller('TramCtrl', ['$scope', '$timeout', 'storage', function($scope
             _.extend(element, group_trams[index]);
 
               var in_seconds = (element.departure - now) / 1000;
-              element.in_minutes = Math.floor(in_seconds / 60);
+              element.in_minutes = Math.floor(in_seconds / 60) % 60;
+              element.in_hours = Math.floor(Math.floor(in_seconds / 60) / 60);
           })
 
+          // we set the light
+          var firstTram;
+          if ($scope.trams[$scope.viewId]) {
+            var tramsBwn3and4Min = _.filter($scope.trams[$scope.viewId], function(tram) {
+              return (tram.in_minutes <= 4 && tram.in_minutes >=3);
+            })
+            // we found a tram
+            if (tramsBwn3and4Min.length > 0) {
+              firstTram = tramsBwn3and4Min[0];
+            }
+          }
+          if (firstTram && (firstTram.number == 10 || firstTram.number == 14)) {
+            console.log("Setting lamp to colored");
+            var hue = firstTram.number == 10 ? 62031 : 47124;
+            $scope.hjs.setValue(2, {hue: hue})
+          }
+          else {
+            console.log("Setting lamp to white");
+            $scope.hjs.setValue(2, {ct: 330})
+          }
         })
 
       })

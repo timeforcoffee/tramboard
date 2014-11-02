@@ -1,0 +1,22 @@
+{
+  "name": "tramboard",
+  "version": "0.0.1",
+  "description": "Tramboard for Swiss tram lines",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fterrier/tramboard.git"
+  },
+  "author": "François Terrier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fterrier/tramboard/issues"
+  },
+  "homepage": "https://github.com/fterrier/tramboard",
+  "dependencies": {
+    "hapi": "~7.2.0"
+  }
+}

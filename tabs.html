@@ -1,0 +1,16 @@
+<ul class="nav nav-tabs">
+  <li ng-repeat="view in possibleViews()" class="{{currentView == view.id ? 'active' : ''}}">
+    <a href="#/view/{{view.id}}">{{view.name}}</a>
+    <span ng-show="currentView == view.id">
+      <a href="#/{{mode == 'edit' ? 'view' : 'edit'}}/{{view.id}}">
+        <span class="glyphicon glyphicon-{{mode == 'edit' ? 'share-alt' : 'pencil'}}"></span>
+      </a>
+    </span>
+  </li>
+  <li class="{{currentView == undefined ? 'active' : ''}}">
+    <a href="#/new">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+  </li>
+
+</ul>

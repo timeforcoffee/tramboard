@@ -6,8 +6,8 @@ var tramServices = angular.module('tramServices', ['ngResource', 'LocalStorageMo
 tramServices.factory('Tram', ['$resource',
 
   function($resource) {
-    return $resource('http://transport.opendata.ch', {}, {
-      queryZH: {method:'GET', url:'http://online.fahrplan.zvv.ch/bin/stboard.exe/dn?L=vs_stbzvv&input=:station&boardType=dep&productsFilter=1:1111111111111111&additionalTime=0&disableEquivs=false&maxJourneys=18&start=yes&monitor=1&requestType=0&view=preview', params:{station:'station'}, isArray:true, transformResponse: function(data, headers){
+    return $resource('', {}, {
+      queryZH: {method:'GET', url:'/bin/stboard.exe/dn?L=vs_stbzvv&input=:station&boardType=dep&productsFilter=1:1111111111111111&additionalTime=0&disableEquivs=false&maxJourneys=18&start=yes&monitor=1&requestType=0&view=preview', params:{station:'station'}, isArray:true, transformResponse: function(data, headers){
         var response = JSON.parse(data.replace('journeysObj = ', ''));
         console.log("Parsed response: ", response);
 
@@ -57,7 +57,59 @@ tramServices.factory('Tram', ['$resource',
 tramServices.factory('storage', ['localStorageService', 'Tram',
   // service to read and write configuration
 
+  /**
+   * [
+      {
+        "name": "Hirschi - City",
+        "station": {
+          "name": "Zürich, Hirschwiesenstrasse",
+          "id": "008591193"
+        },
+        "keywords": "bahnhofplatz, triemli",
+        "id": "59C96004-AD8F-5910-8954-F58CD5B34D61"
+      },
+      {
+        "name": "City - Hirschi",
+        "station": {
+          "name": "Zürich, Hirschwiesenstrasse",
+          "id": "008591193"
+        },
+        "keywords": "flughafen, seebach, oerlikon",
+        "id": "5FFBCFA4-7EF4-56C4-BC35-651CF04E0874"
+      },
+      {
+        "name": "Milchbuck",
+        "station": {
+          "name": "Zürich, Milchbuck",
+          "id": "008591276"
+        },
+        "id": "6464B340-4C38-56DA-84F8-6DE530830FF3"
+      },
+      {
+        "name": "HB - Basel",
+        "station": {
+          "name": "Zürich HB",
+          "id": "008503000"
+        },
+        "id": "6E91C6F7-0DA3-5785-9064-AF819D91AD50",
+        "keywords": "basel"
+      },
+      {
+        "name": "Bassecourt",
+        "station": {
+          "name": "Bassecourt",
+          "id": "008500122"
+        },
+        "id": "41F39077-A369-5BA2-8E53-1F8E91993303",
+        "keywords": ""
+      }
+    ]
+   *
+   */
+
   function(localStorageService, Tram) {
+
+    var slug = createSlug({lang: 'de'});
 
     function getConfig() {
       var json = localStorageService.get('localStorageKey');
@@ -124,7 +176,7 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
         var config = getConfig()
 
         if (view.id == undefined) {
-          view.id = chance.guid();
+          view.id = slug(view.name);
         }
 
         var foundViews = _.filter(config, function(existingView) {
@@ -132,6 +184,7 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
         });
 
         if (foundViews.length > 0) {
+          view.id = slug(view.name);
           _.extend(foundViews[0], view);
         }
         else {
