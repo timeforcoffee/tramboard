@@ -11,9 +11,9 @@
           <div class="station">{{tram.nice_to}}</div>
         </div>
 
-        <div class="col-xs-2 departure {{tram.undelayed.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
-          <div>{{tram.departure.getHours()}}:{{tram.departure.getMinutes().toString().length == 1 ? '0'+tram.departure.getMinutes() : tram.departure.getMinutes()}}</div>
-          <div class="undelayed">{{(tram.undelayed.getTime() != tram.departure.getTime()) ? (tram.undelayed.getHours()+':'+(tram.undelayed.getMinutes().toString().length == 1 ? '0'+tram.undelayed.getMinutes() : tram.undelayed.getMinutes())) : ''}}</div>
+        <div class="col-xs-2 departure {{tram.undelayed_departure.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
+          <div>{{tram.departure.hours()}}:{{tram.departure.minutes().toString().length == 1 ? '0'+tram.departure.minutes() : tram.departure.minutes()}}</div>
+          <div class="undelayed_departure">{{(tram.delay_in_minutes > 0) ? (tram.undelayed_departure.hours()+':'+(tram.undelayed_departure.minutes().toString().length == 1 ? '0'+tram.undelayed_departure.minutes() : tram.undelayed_departure.minutes())) : ''}}</div>
         </div>
 
         <div class="col-xs-2 text-right time time{{tram.in_minutes}} {{tram.in_hours != 0 ? 'small' : ''}}">

@@ -7,32 +7,20 @@ tramServices.factory('Tram', ['$resource',
 
   function($resource) {
     return $resource('', {}, {
-      queryStation: {method:'GET', url:'/bin/stboard.exe/dn?L=vs_stbzvv&input=:station&boardType=dep&productsFilter=1:1111111111111111&additionalTime=0&disableEquivs=false&maxJourneys=18&start=yes&monitor=1&requestType=0&view=preview', params:{station:'station'}, isArray:true, transformResponse: function(data, headers){
-        var response = JSON.parse(data.replace('journeysObj = ', ''));
-        console.log("Parsed response: ", response);
+      queryStation: {method:'GET', url:'/stationboard/:station', params:{station:'station'}, isArray: true, responseType: 'json', transformResponse: function(data, headers){
+        var now = Date.now();
 
-        // TODO move this logic on the server
-        return _.map(response.journey, function(entry){
-          var dateItems = entry.da.split('.');
+        return _.map(data, function(item) {
+            item.departure = moment(item.departure);
+            item.undelayed_departure = moment(item.undelayed_departure);
 
-          var departure = new Date(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.rt.dlt);
-          var undelayed = new Date(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.ti);
+            var in_seconds = (item.departure - now) / 1000;
+            item.in_minutes = Math.floor(in_seconds / 60) % 60;
+            item.in_hours = Math.floor(Math.floor(in_seconds / 60) / 60);
 
-          var special;
-          var number = entry.pr.replace(/ /g, '');
-          if (number.charAt(0) == "N") special = "night";
-          if (number.length == 3) special += " small";
-
-          if (!departure || !departure.getFullYear()) departure = undelayed;
-
-          var response = {
-            departure: departure,
-            undelayed: undelayed,
-            to: entry.st.replace("Z\u00FCrich, ", ""),
-            number: number,
-            special: special
-          }
-          return response;
+            // TODO make a better logic here
+            item.nice_to = item.to.replace("Z\u00FCrich, ", "")
+            return item;
         });
       }},
 

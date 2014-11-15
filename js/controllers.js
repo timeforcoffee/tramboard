@@ -79,8 +79,6 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
    */
   (function update() {
     $timeout(update, $scope.refreshInterval);
-    var now = Date.now();
-
     console.log('Updating data. Current data, trams: ', $scope.trams);
 
     // if the view is set
@@ -115,13 +113,6 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
         // we extend the tram list with the new tram stuff
         _.each($scope.trams, function(element, index){
           _.extend(element, filteredTrams[index]);
-
-            var in_seconds = (element.departure - now) / 1000;
-            element.in_minutes = Math.floor(in_seconds / 60) % 60;
-            element.in_hours = Math.floor(Math.floor(in_seconds / 60) / 60);
-
-            // TODO make a better logic here
-            element.nice_to = element.to.replace("Z\u00FCrich, ", "")
         })
 
         // we set the light
