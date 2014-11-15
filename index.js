@@ -55,6 +55,7 @@ server.route({
 
 			          if (!departure || !departure.getFullYear()) departure = undelayed;
 
+			          // TODO complete this with all sorts of possible stuff
 			          var name
 			          switch(entry.productCategory) {
 			            case "Trm-NF":
@@ -75,7 +76,7 @@ server.route({
 			            delay_in_minutes: entry.rt.dlm,
 			            to: entry.st,
 			            number: number,
-			            name: name,
+			            sbb_name: name,
 			            special: special
 			          }
 

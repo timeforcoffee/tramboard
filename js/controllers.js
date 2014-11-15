@@ -27,6 +27,16 @@ tramApp.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Tram', '
   $scope.viewId = $routeParams.viewId;
   $scope.view = _.clone(storage.getView($routeParams.viewId));
 
+  $scope.addStation = function() {
+    console.log("Adding station to view: ", $scope.view);
+    $scope.view.stations.push({keywords: ''});
+  }
+
+  $scope.removeStation = function(index) {
+    console.log("Removing station from view: ", $scope.view);
+    $scope.view.stations.splice(index, 1);
+  }
+
   $scope.save = function() {
     console.log("Saving ", $scope.view);
     storage.saveView($scope.view);
@@ -37,6 +47,7 @@ tramApp.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Tram', '
     console.log("Deleting ", $scope.view);
     storage.deleteView($scope.view);
     $scope.view = null;
+    $location.path('/');
   }
 
   $scope.getStations = function(text) {
@@ -85,25 +96,39 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
     if ($scope.viewId) {
       var currentView = storage.getView($routeParams.viewId);
 
-      Tram.queryStation({station: currentView.station.id}, function(trams) {
-        console.log("Handling answer for station: ", currentView.station, ", answer: ", trams);
+      async.map(currentView.stations, function(station, callback) {
+        Tram.queryStation({station: station.stat.id}, function(trams) {
+          console.log("Handling answer for station: ", station.stat.name, ", answer: ", trams);
 
-        // we get the trams that interest us 
-        var filteredTrams = _.filter(trams, function(tram) {
-          var keywords = currentView.keywords.trim().length == 0 ? [] : currentView.keywords.split(',')
+          // we get the trams that interest us 
+          var filteredTrams = _.filter(trams, function(tram) {
+            var keywords = station.keywords.trim().length == 0 ? [] : station.keywords.split(',')
 
-          // we find any word in "contains" that matches the destination
-          // if it's more than 0, then we know it matches
-          var foundWords = _.find(keywords, function(word) {
-            // console.log("Checking if ", tram.to, " contains ", word);
+            // we find any word in "contains" that matches the destination
+            // if it's more than 0, then we know it matches
+            var foundWords = _.find(keywords, function(word) {
+              // console.log("Checking if ", tram.to, " contains ", word);
 
-            return tram.to.toLowerCase().indexOf(word.trim().toLowerCase()) != -1
-          });
-          // console.log("Found words ", foundWords, " for ", tram.to)
-          return keywords.length == 0 || (foundWords != undefined && foundWords.length > 0);
+              return tram.to.toLowerCase().indexOf(word.trim().toLowerCase()) != -1
+            });
+            // console.log("Found words ", foundWords, " for ", tram.to)
+            return keywords.length == 0 || (foundWords != undefined && foundWords.length > 0);
+          })
+
+          console.log("Found trams for station ", station.stat.name, ": ", filteredTrams);
+
+          callback(null, filteredTrams);
+        })
+      }, function(err, results) {
+        // results is an array of results
+        console.log("Filtered results for all stations: ", results);
+
+        var filteredTrams = _.flatten(results);
+        filteredTrams = _.sortBy(filteredTrams, function(item) {
+          return item.departure;
         })
 
-        console.log("Found trams for station ", currentView.station, ": ", filteredTrams);
+        console.log("Filtered trams sorted: ", filteredTrams);
 
         // this is to initialize scope.trams if it's not done yet (first time this is executed)
         if (!$scope.trams) {
@@ -114,6 +139,7 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
         _.each($scope.trams, function(element, index){
           _.extend(element, filteredTrams[index]);
         })
+
 
         // we set the light
         /*var firstTram;

@@ -13,15 +13,30 @@
         <input id="viewName" ng-model="view.name" type="text" class="form-control" placeholder="View name (displayed in the tab)" required></input>
       </div>
 
-      <div class="form-group">
-        <label for="viewStation">Station</label>
-        <input id="viewStation" ng-model="view.station" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as station.name for station in getStations($viewValue) | filter:$viewValue" typeahead-loading="loadingStations" required></input>
-        <i ng-show="loadingStations" class="glyphicon glyphicon-refresh"></i>
-      </div>
+        <div class="row" ng-repeat="station in view.stations">
 
-      <div class="form-group">
-        <label for="viewKeywords">Keywords</label>
-        <input id="viewKeywords" ng-model="view.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
+          <div class="col-sm-12">
+
+            <div class="form-group">
+              <label for="viewStation[{{$index}}]">Station</label>
+              <input id="viewStation[{{$index}}]" ng-model="station.stat" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as station.name for station in getStations($viewValue) | filter:$viewValue" typeahead-loading="loadingStations" required></input>
+              <i ng-show="loadingStations" class="glyphicon glyphicon-refresh"></i>
+            </div>
+
+            <div class="form-group">
+              <label for="viewKeywords[{{$index}}]">Keywords</label>
+              <input id="viewKeywords[{{$index}}]" ng-model="station.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
+            </div>
+
+            <div>
+              <a href="" ng-click="removeStation($index)">Remove this station</a>      
+            </div> 
+          </div>
+
+        </div>
+
+      <div>
+        <a href="" ng-click="addStation()">Add a station</a>
       </div>
 
       <button ng-click="save()" ng-disabled="newViewForm.$invalid" class="btn btn-primary">Save</button>
