@@ -58,7 +58,7 @@ tramApp.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Tram', '
 
 }]);
 
-tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage', function($scope, $routeParams, $timeout, storage) {
+tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage', 'Tram', function($scope, $routeParams, $timeout, storage, Tram) {
 
   $scope.viewId = $routeParams.viewId;
   $scope.refreshInterval = 10000;
@@ -66,7 +66,7 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
   /**
    * We initialize the model with nothing
    */
-  $scope.trams = {};
+  $scope.trams;
 
   /*$scope.hjs = HueJS({
             ipAddress:"10.10.0.195",
@@ -81,44 +81,47 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
     $timeout(update, $scope.refreshInterval);
     var now = Date.now();
 
-    console.log($scope.trams);
+    console.log('Updating data. Current data, trams: ', $scope.trams);
 
     // if the view is set
     if ($scope.viewId) {
       var currentView = storage.getView($routeParams.viewId);
 
-      storage.queryStation(currentView.station.id, function(trams) {
+      Tram.queryStation({station: currentView.station.id}, function(trams) {
         console.log("Handling answer for station: ", currentView.station, ", answer: ", trams);
 
-        // we get the elements of the group in the group_trams variable
-        var group_trams = _.filter(trams, function(tram) {
-          var keywords = currentView.keywords.split(',')
+        // we get the trams that interest us 
+        var filteredTrams = _.filter(trams, function(tram) {
+          var keywords = currentView.keywords.trim().length == 0 ? [] : currentView.keywords.split(',')
 
           // we find any word in "contains" that matches the destination
           // if it's more than 0, then we know it matches
-          var found_words = _.find(keywords, function(word) {
+          var foundWords = _.find(keywords, function(word) {
             // console.log("Checking if ", tram.to, " contains ", word);
 
             return tram.to.toLowerCase().indexOf(word.trim().toLowerCase()) != -1
           });
-          // console.log("Found words ", found_words, " for ", tram.to)
-          return keywords.length == 0 || (found_words != undefined && found_words.length > 0);
+          // console.log("Found words ", foundWords, " for ", tram.to)
+          return keywords.length == 0 || (foundWords != undefined && foundWords.length > 0);
         })
 
-        console.log("Found trams for station ", currentView.station, ": ", group_trams);
+        console.log("Found trams for station ", currentView.station, ": ", filteredTrams);
 
         // this is to initialize scope.trams if it's not done yet (first time this is executed)
-        if (!(currentView.id in $scope.trams)) {
-          $scope.trams[currentView.id] = group_trams
+        if (!$scope.trams) {
+          $scope.trams = filteredTrams
         }
 
         // we extend the tram list with the new tram stuff
-        _.each($scope.trams[currentView.id], function(element, index){
-          _.extend(element, group_trams[index]);
+        _.each($scope.trams, function(element, index){
+          _.extend(element, filteredTrams[index]);
 
             var in_seconds = (element.departure - now) / 1000;
             element.in_minutes = Math.floor(in_seconds / 60) % 60;
             element.in_hours = Math.floor(Math.floor(in_seconds / 60) / 60);
+
+            // TODO make a better logic here
+            element.nice_to = element.to.replace("Z\u00FCrich, ", "")
         })
 
         // we set the light

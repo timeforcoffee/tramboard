@@ -1,0 +1,90 @@
+SBB Mobile Website
+---------
+GOOD Get stops from name (type-ahead)
+http://fahrplan.sbb.ch/bin/ajax-getstop.exe/dny?start=1&tpl=suggest2json&encoding=utf-8&REQ0JourneyStopsS0A=7&getstop=1&noSession=yes&REQ0JourneyStopsB=10&REQ0JourneyStopsS0G=hirsch%3F&js=true&
+
+Query connections:
+http://fahrplan.sbb.ch/bin/query.exe/dn?seqnr=1&ident=al.01540924.1415453126&HWAI=CONNECTION$C0-0!id=C0-0!HwaiConId=C0-0!HwaiDetailStatus=details!HwaiConnectionNumber=1!HwaiMoreDetailStatus=none!HwaiAdditionalInformation=none!&ajax=1
+
+Query connections with intermediary stops:
+http://fahrplan.sbb.ch/bin/query.exe/dn?seqnr=2&ident=al.01540924.1415453126&HWAI=CONNECTION$C0-0!id=C0-0!HwaiConId=C0-0!HwaiDetailStatus=details!HwaiConnectionNumber=1!HwaiAdditionalInformation=intermediateStops!&ajax=1
+
+SBB App
+---------
+http://sbb-ipad.hafas.de/bin/query.exe/en?performGis=1&clientType=IPHONE&REQMapRequestedItems=9&ident=9g.0200261.1415452963&seqnr=1&element=1&REQMapConnectionSection=2&REQMapConnectionId=C1-0&ID=C1-0&L=vs_java3
+http://sbb-ipad.hafas.de/bin/query.exe/en?performGis=1&clientType=IPHONE&REQMapRequestedItems=9&ident=9g.0200261.1415452963&seqnr=1&element=1&REQMapConnectionSection=2&REQMapConnectionId=C1-2&ID=C1-2&L=vs_java3
+
+GOOD Positions of trains on map:
+http://sbb-ipad.hafas.de/bin/query.exe/dny?look_minx=8143414&look_maxx=8700456&look_miny=47136215&look_maxy=47577934&tpl=trains2json&look_productclass=63&look_json=yes&performLocating=1&look_nv=get_pstop%7Cyes%7Cget_nstop%7Cyes%7Cget_fstop%7Cyes%7Cget_lstop%7Cyes%7Cget_stopevaids%7Cyes%7Cget_stopdates%7Cyes%7Cget_stoptimes%7Cyes%7Cget_jhandle%7Cyes%7Cget_trainid%7Cyes%7Cinterval%7C60000%7Cintervalstep%7C5000
+
+GOOD Positions of trains on map:
+http://sbb-ipad.hafas.de/bin/query.exe/dny?look_minx=8484645&look_maxx=8582274&look_miny=47316428&look_maxy=47393849&tpl=trains2json&look_productclass=575&look_json=yes&performLocating=1&look_nv=get_pstop%7Cyes%7Cget_nstop%7Cyes%7Cget_fstop%7Cyes%7Cget_lstop%7Cyes%7Cget_stopevaids%7Cyes%7Cget_stopdates%7Cyes%7Cget_stoptimes%7Cyes%7Cget_jhandle%7Cyes%7Cget_trainid%7Cyes%7Cinterval%7C60000%7Cintervalstep%7C5000
+
+
+SBB website
+---------
+Positions of trains on map:
+http://fahrplan.sbb.ch/bin/query.exe/eny?look_minx=5737682&look_maxx=10762318&look_miny=45927414&look_maxy=48051478&performLocating=1&performFixedLocating=1&
+
+Current location of singletrain:
+http://fahrplan.sbb.ch/bin/query.exe/eny?tpl=singletrain2json&performLocating=8&look_nv=get_rtstoptimes|yes|get_zntrainname|no|get_realstops|yes&look_trainid=84/47005/18/19/95
+
+Line of points for trajet of one train:
+http://fahrplan.sbb.ch/bin/query.exe/eny?performLocating=512&tpl=rg2json&look_nv=type|realgraph&look_trainid=84/47005/18/19/95&
+
+GOOD? Current schedule of train (stops and time):
+http://fahrplan.sbb.ch/bin/traininfo.exe/dn/84/459999/18/19/95?L=vs_liveticker&hideLineInfo=no&date=today&preview=true
+http://fahrplan.sbb.ch/bin/traininfo.exe/en/84/47005/18/19/95?L=vs_liveticker&hideLineInfo=yes&date=today&
+http://fahrplan.sbb.ch/bin/traininfo.exe/en/84/47394/18/19/95?L=vs_liveticker&hideLineInfo=yes&date=today&
+
+ZVV widget
+-------
+GOOD Stationboard of a stop with delay :
+http://online.fahrplan.zvv.ch/bin/stboard.exe/dn?L=vs_widgets&input=Z%C3%BCrich,%20Hirschwiesenstrasse!&dirInput=Z%C3%BCrich%20Hauptbahnhof&boardType=dep&time=14:57&productsFilter=01001111110&additionalTime=0&disableEquivs=false&maxJourneys=20&start=yes&selectDate=today&monitor=1&requestType=0&timeFormat=cd&view=preview
+
+ZVV website
+--------
+Suggestions for stop name type-ahead:
+http://online.fahrplan.zvv.ch/bin/ajax-getstop.exe/dny?start=1&tpl=suggest2json&REQ0JourneyStopsS0A=7&getstop=1&noSession=yes&REQ0JourneyStopsB=10&REQ0JourneyStopsS0G=hirsc%3F&js=true&
+
+Query for connections from point A to Point B
+http://online.fahrplan.zvv.ch/bin/query.exe/dn?start=1&charset=utf-8&REQ0JourneyStopsS0A=1&S=Z%C3%BCrich%2C+Hirschwiesenstrasse&REQ0JourneyStopsSID=A%3D1%40O%3DZ%C3%BCrich%2C+Hirschwiesenstrasse%40X%3D8543213%40Y%3D47399994%40U%3D14%40L%3D008591193%40B%3D1%40p%3D1415176554%40&HWAI%3DJS%21js=yes&HWAI%3DJS%21ajax=yes&REQ0JourneyStopsZ0A=1&Z=Z%C3%BCrich+HB&REQ0JourneyStopsZID=A%3D1%40O%3DZ%26%23252%3Brich+HB%40X%3D8537945%40Y%3D47378491%40U%3D85%40L%3D008503000%40B%3D1%40p%3D1413963911%40&date=Sa%2C+8.11.14&time=14%3A57&timesel=depart&searchMode=S
+
+Detail of 1 connection:
+http://online.fahrplan.zvv.ch/bin/query.exe/dn?currentCSS=theme_zvv&seqnr=1&ident=nv.0173321.1415455036&HWAI=CONNECTION$C0-0!id=C0-0!HwaiConId=C0-0!HwaiDetailStatus=details!HwaiMoreDetailStatus=none!HwaiAdditionalInformation=none!&ajax=1
+
+Detail of 1 connection with intermediary stops:
+http://online.fahrplan.zvv.ch/bin/query.exe/dn?currentCSS=theme_zvv&seqnr=2&ident=nv.0173321.1415455036&HWAI=CONNECTION$C0-0$SECT-0!HwaiAdditionalInformation=intermediateStopsPerSection!HwaiShowIntermediateStops=yes;CONNECTION$C0-0$SECT-1!HwaiAdditionalInformation=intermediateStopsPerSection!HwaiShowIntermediateStops=yes;
+
+One tram with position of points of trajet:
+http://online.fahrplan.zvv.ch/bin/query.exe/dny?performLocating=512&tpl=himmatch2oldjson&look_nv=type|himmatch|pubchannels|timetable|getPoly|yes|&
+
+Position of stops on map:
+http://online.fahrplan.zvv.ch/bin/query.exe/dny?performLocating=2&tpl=stop2json&look_maxno=150&look_nv=get_stopweight|yes|nur_hauptmast|yes&look_maxdist=2088642&look_stopclass=512&&look_maxx=8562580&look_maxy=47403739&look_minx=8518892&look_miny=47371525
+
+SBB android
+-------
+http://xmlfahrplan.sbb.ch/bin/extxml.exe/
+
+From hirschi to hb:
+Request 1:
+<?xml version="1.0" encoding="ISO-8859-1"?><ReqC lang="EN" prod="samsung GT-S5360, Android OS: 4.1.1 (SDK:10) (H)" ver="3.0.5" accessId="sbuR5gsaDCEzWpCzSuEnxJOmDbb5vEM1vf0tWwjY3s6eab2uj8dAiLvjisGKDnN"><LocValReq id="fromInput" sMode="1"><ReqLoc match="Z¸rich, Hirschwiesenstrasse" type="ST"></ReqLoc></LocValReq><LocValReq id="toInput" sMode="1"><ReqLoc match="Z¸rich HB" type="ALLTYPE"></ReqLoc></LocValReq></ReqC>
+Request 2:
+<?xml version="1.0" encoding="ISO-8859-1"?><ReqC lang="EN" prod="samsung GT-S5360, Android OS: 4.1.1 (SDK:10) (H)" ver="3.0.5" accessId="sbuR5gsaDCEzWpCzSuEnxJOmDbb5vEM1vf0tWwjY3s6eab2uj8dAiLvjisGKDnN"><ConReq><Start><Station name="Z¸rich, Hirschwiesenstrasse" externalId="008591193#95"></Station><Prod prod="1111111111000000"></Prod></Start><Dest><Station name="Z¸rich HB" externalId="008503000#85"></Station></Dest><ReqT a="0" date="20141108" time="15:03"></ReqT><RFlags b="0" f="4" sMode="N"></RFlags></ConReq></ReqC>
+
+GOOD Schedule of tram 14 from Hirschi to HB with stops (all of them):
+<?xml version="1.0" encoding="ISO-8859-1"?><ReqC lang="EN" prod="samsung GT-S5360, Android OS: 4.1.1 (SDK:10) (H)" ver="3.0.5" accessId="sbuR5gsaDCEzWpCzSuEnxJOmDbb5vEM1vf0tWwjY3s6eab2uj8dAiLvjisGKDnN"><JourneyReq date="20141108" time="15:03" type="DEP" externalId="008591193#95"><JHandle tNr="307547" puic="95" cycle="18"></JHandle></JourneyReq></ReqC>
+
+ZVV App
+-----
+Connections (encrypted)
+http://online.fahrplan.zvv.ch/bin/query.exe/en
+clientSystem=Android10&REQ0JourneyProduct_prod_list_1=11111111111111&timeSel=depart&hcount=0&REQ0JourneyDep_Foot_speed=100&date=08.11.2014&REQ0JourneyDest_Foot_maxDist=2000&ignoreMinuteRound=yes&androidversion=3.0.7%20(31058)&SID=A%3d1%40O%3dZ%c3%bcrich,%20Hirschwiesenstrasse%40X%3d8543213%40Y%3d47399994%40U%3d14%40L%3d008591193%40B%3d1%40p%3d1415176554%40&h2g-direct=11&time=15%3a34&REQ0HafasNumCons0=3&start=1&REQ0HafasNumCons1=0&REQ0JourneyDep_Foot_maxDist=2000&clientDevice=GT-S5360&REQ0JourneyDest_Foot_speed=100&REQ0HafasNumCons2=3&htype=GT-S5360&ZID=A%3d1%40O%3dZ%c3%bcrich%20HB%40X%3d8537945%40Y%3d47378491%40U%3d15%40L%3d008503000%40B%3d1%40p%3d1415171914%40&clientType=ANDROID
+
+Schedule of tram with delay :
+http://online.fahrplan.zvv.ch/bin/stboard.exe/en
+boardType=dep&clientSystem=Android10&sTI=1&hcount=0&L=vs_java3&date=08.11.2014&REQTrain_name=Trm%20%20%2014&androidversion=3.0.7%20(31058)&time=15%3a28&input=%238591193&start=yes&clientDevice=GT-S5360&htype=GT-S5360&dirInput=299983&clientType=ANDROID
+
+Station board from Hirschi :
+http://online.fahrplan.zvv.ch/bin/stboard.exe/en
+productsFilter=11111111111111&boardType=dep&clientSystem=Android10&sortOrder=realtime&hcount=0&L=vs_java3&date=08.11.2014&androidversion=3.0.7%20(31058)&dirTripelId=A%3d1%40O%3dZ%c3%bcrich%20HB%40X%3d8537945%40Y%3d47378491%40U%3d15%40L%3d008503000%40B%3d1%40p%3d1415171914%40&time=15%3a38&maxJourneys=50&showHimMessages=1&start=yes&clientDevice=GT-S5360&htype=GT-S5360&inputTripelId=A%3d1%40O%3dZ%c3%bcrich,%20Hirschwiesenstrasse%40X%3d8543213%40Y%3d47399994%40U%3d14%40L%3d008591193%40B%3d1%40p%3d1415176554%40&clientType=ANDROID

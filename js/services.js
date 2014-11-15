@@ -7,7 +7,7 @@ tramServices.factory('Tram', ['$resource',
 
   function($resource) {
     return $resource('', {}, {
-      queryZH: {method:'GET', url:'/bin/stboard.exe/dn?L=vs_stbzvv&input=:station&boardType=dep&productsFilter=1:1111111111111111&additionalTime=0&disableEquivs=false&maxJourneys=18&start=yes&monitor=1&requestType=0&view=preview', params:{station:'station'}, isArray:true, transformResponse: function(data, headers){
+      queryStation: {method:'GET', url:'/bin/stboard.exe/dn?L=vs_stbzvv&input=:station&boardType=dep&productsFilter=1:1111111111111111&additionalTime=0&disableEquivs=false&maxJourneys=18&start=yes&monitor=1&requestType=0&view=preview', params:{station:'station'}, isArray:true, transformResponse: function(data, headers){
         var response = JSON.parse(data.replace('journeysObj = ', ''));
         console.log("Parsed response: ", response);
 
@@ -182,13 +182,6 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
 
         saveConfig(config);
         clearCache();
-      },
-
-      queryStation: function(station, callback) {
-        console.log("Trying ZVV API");
-        Tram.queryZH({station:station}, function(response) {
-          callback(response);
-        });
       },
 
     }

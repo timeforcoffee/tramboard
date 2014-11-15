@@ -1,31 +1,27 @@
 <!-- these are all the configured station tabs -->
 <tabs current-view="{{viewId}}" mode="view"></tabs>
 
-<div class="tab-content clearfix">
-  <div class="tab-pane active" id="{{viewId}}">
+<div class="row">
+  <ul class="list-unstyled col-xs-12">
+    <li ng-repeat="tram in (trams | limitTo:4)">
+      <div class="row tram-row tram-row{{tram.in_minutes}}">
 
-    <ul class="list-unstyled">
-      <li ng-repeat="tram in (trams[viewId] | limitTo:6)">
-        <div class="row tram-row tram-row{{tram.in_minutes}}">
-
-          <div class="col-xs-8 destination">
-            <div class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</div>
-            <div class="station">{{tram.to}}</div>
-          </div>
-
-          <div class="col-xs-2 departure {{tram.undelayed.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
-            <div>{{tram.departure.getHours()}}:{{tram.departure.getMinutes().toString().length == 1 ? '0'+tram.departure.getMinutes() : tram.departure.getMinutes()}}</div>
-            <div class="undelayed">{{(tram.undelayed.getTime() != tram.departure.getTime()) ? (tram.undelayed.getHours()+':'+(tram.undelayed.getMinutes().toString().length == 1 ? '0'+tram.undelayed.getMinutes() : tram.undelayed.getMinutes())) : ''}}</div>
-          </div>
-
-          <div class="col-xs-2 text-right time time{{tram.in_minutes}} {{tram.in_hours != 0 ? 'small' : ''}}">
-            <img src="images/tram.png"></img>
-            <div>{{tram.in_hours != 0 ? tram.in_hours+':' : ''}}{{tram.in_hours != 0 && tram.in_minutes < 10 ? '0' : ''}}{{tram.in_minutes}}</div>
-          </div>
-
+        <div class="col-xs-8 destination">
+          <div class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</div>
+          <div class="station">{{tram.nice_to}}</div>
         </div>
-      </li>
-    </ul>
-  </div>
-</div>
 
+        <div class="col-xs-2 departure {{tram.undelayed.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
+          <div>{{tram.departure.getHours()}}:{{tram.departure.getMinutes().toString().length == 1 ? '0'+tram.departure.getMinutes() : tram.departure.getMinutes()}}</div>
+          <div class="undelayed">{{(tram.undelayed.getTime() != tram.departure.getTime()) ? (tram.undelayed.getHours()+':'+(tram.undelayed.getMinutes().toString().length == 1 ? '0'+tram.undelayed.getMinutes() : tram.undelayed.getMinutes())) : ''}}</div>
+        </div>
+
+        <div class="col-xs-2 text-right time time{{tram.in_minutes}} {{tram.in_hours != 0 ? 'small' : ''}}">
+          <img src="images/tram.png"></img>
+          <div>{{tram.in_hours != 0 ? tram.in_hours+':' : ''}}{{tram.in_hours != 0 && tram.in_minutes < 10 ? '0' : ''}}{{tram.in_minutes}}</div>
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</div>
