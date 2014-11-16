@@ -4,6 +4,7 @@ var Hapi   = require('hapi');
 var needle = require('needle');
 var Joi    = require('joi');
 var _      = require('underscore');
+var moment = require('moment-timezone');
 
 var server = new Hapi.Server(+process.env.PORT || 8000, '0.0.0.0');
 
@@ -45,15 +46,15 @@ server.route({
 			        reply(_.map(jsonResponse.journey, function(entry){
 			          var dateItems = entry.da.split('.');
 
-			          var departure = new Date(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.rt.dlt);
-			          var undelayed = new Date(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.ti);
+			          var departure = moment.tz(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.rt.dlt, 'Europe/Zurich');
+			          var undelayed = moment.tz(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.ti, 'Europe/Zurich');
 
 			          var special;
 			          var number = entry.pr.replace(/ /g, '');
 			          if (number.charAt(0) == "N") special = "night";
 			          if (number.length == 3) special += " small";
 
-			          if (!departure || !departure.getFullYear()) departure = undelayed;
+			          if (!departure || !departure.year()) departure = undelayed;
 
 			          // TODO complete this with all sorts of possible stuff
 			          var name
@@ -71,8 +72,8 @@ server.route({
 
 			          var data = {
 			            zvv_id: entry.id,
-			            departure: departure,
-			            undelayed_departure: undelayed,
+			            departure: departure.format(),
+			            undelayed_departure: undelayed.format(),
 			            delay_in_minutes: entry.rt.dlm,
 			            to: entry.st,
 			            number: number,

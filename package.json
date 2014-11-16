@@ -20,6 +20,7 @@
     "hapi": "~7.2.0",
     "needle": "~0.7.10",
     "joi": "~4.8.1",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "moment-timezone": "~0.2.5"
   }
 }
