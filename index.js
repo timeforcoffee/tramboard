@@ -46,8 +46,8 @@ server.route({
 			        reply(_.map(jsonResponse.journey, function(entry){
 			          var dateItems = entry.da.split('.');
 
-			          var departure = moment.tz(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.rt.dlt, 'Europe/Zurich');
-			          var undelayed = moment.tz(dateItems[1]+'/'+dateItems[0]+'/20'+dateItems[2]+' '+entry.ti, 'Europe/Zurich');
+			          var departure = moment.tz('20'+dateItems[2]+'-'+dateItems[1]+'-'+dateItems[0]+' '+entry.rt.dlt, 'Europe/Zurich');
+			          var undelayed = moment.tz('20'+dateItems[2]+'-'+dateItems[1]+'-'+dateItems[0]+' '+entry.ti, 'Europe/Zurich');
 
 			          var special;
 			          var number = entry.pr.replace(/ /g, '');
