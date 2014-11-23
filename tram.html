@@ -1,27 +1,26 @@
 <!-- these are all the configured station tabs -->
 <tabs current-view="{{viewId}}" mode="view"></tabs>
 
-<div class="row">
-  <ul class="list-unstyled col-xs-12">
-    <li ng-repeat="tram in (trams | limitTo:8)">
-      <div class="row tram-row tram-row{{tram.in_minutes}}">
+<div class="col-xs-12">
+  <div class="row">
+    <table class="tram-table col-xs-12">
+      <tr class="tram-row" ng-repeat="tram in (trams | limitTo:8)">
 
-        <div class="col-xs-8 destination">
-          <div class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</div>
-          <div class="station">{{tram.nice_to}}</div>
-        </div>
+        <td class="number-cell"><span class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</span></td>
 
-        <div class="col-xs-2 departure {{tram.undelayed_departure.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
+        <td class="station">{{tram.nice_to}}</td>
+
+        <td class="departure {{tram.undelayed_departure.getTime() != tram.departure.getTime() ? 'delayed-departure' :''}}">
           <div>{{tram.departure.hours()}}:{{tram.departure.minutes().toString().length == 1 ? '0'+tram.departure.minutes() : tram.departure.minutes()}}</div>
           <div class="undelayed">{{(tram.delay_in_minutes > 0) ? (tram.undelayed_departure.hours()+':'+(tram.undelayed_departure.minutes().toString().length == 1 ? '0'+tram.undelayed_departure.minutes() : tram.undelayed_departure.minutes())) : ''}}</div>
-        </div>
+        </td>
 
-        <div class="col-xs-2 text-right time time{{tram.in_minutes}} {{tram.in_hours != 0 ? 'small' : ''}}">
+        <td class="text-right time time{{tram.in_minutes}} {{tram.in_hours != 0 ? 'small' : ''}}">
           <img src="images/tram.png"></img>
           <div>{{tram.in_hours != 0 ? tram.in_hours+':' : ''}}{{tram.in_hours != 0 && tram.in_minutes < 10 ? '0' : ''}}{{tram.in_minutes}}</div>
-        </div>
+        </td>
 
-      </div>
-    </li>
-  </ul>
+      </tr>
+    </table>
+  </div>
 </div>
