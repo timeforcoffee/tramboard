@@ -5,42 +5,42 @@
   <div class="col-sm-12">
     <form name="newViewForm">
 
-      <h4 ng-show="view.id">Edit view {{view.name}}</h4>
-      <h4 ng-show="!view.id">Add a new view</h4>
+      <h4 ng-show="EditCtrl.view.id">Edit view {{EditCtrl.view.name}}</h4>
+      <h4 ng-show="!EditCtrl.view.id">Add a new view</h4>
 
       <div class="form-group">
         <label for="viewName">Name</label>
-        <input id="viewName" ng-model="view.name" type="text" class="form-control" placeholder="View name (displayed in the tab)" required></input>
+        <input id="viewName" ng-model="EditCtrl.view.name" type="text" class="form-control" placeholder="View name (displayed in the tab)" required></input>
       </div>
 
-        <div class="row" ng-repeat="station in view.stations">
+        <div class="row" ng-repeat="station in EditCtrl.view.stations">
 
           <div class="col-sm-12">
 
             <div class="form-group">
               <label for="viewStation[{{$index}}]">Station</label>
-              <input id="viewStation[{{$index}}]" ng-model="station.stat" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as station.name for station in getStations($viewValue) | filter:$viewValue" typeahead-loading="loadingStations" required></input>
-              <i ng-show="loadingStations" class="glyphicon glyphicon-refresh"></i>
+              <input id="viewStation[{{$index}}]" ng-model="EditCtrl.station.stat" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as EditCtrl.station.name for station in EditCtrl.getStations($viewValue) | filter:$viewValue" typeahead-loading="EditCtrl.loadingStations" required></input>
+              <i ng-show="EditCtrl.loadingStations" class="glyphicon glyphicon-refresh"></i>
             </div>
 
             <div class="form-group">
               <label for="viewKeywords[{{$index}}]">Keywords</label>
-              <input id="viewKeywords[{{$index}}]" ng-model="station.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
+              <input id="viewKeywords[{{$index}}]" ng-model="EditCtrl.station.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
             </div>
 
             <div>
-              <a href="" ng-click="removeStation($index)">Remove this station</a>      
-            </div> 
+              <a href="" ng-click="EditCtrl.removeStation($index)">Remove this station</a>
+            </div>
           </div>
 
         </div>
 
       <div>
-        <a href="" ng-click="addStation()">Add a station</a>
+        <a href="" ng-click="EditCtrl.addStation()">Add a station</a>
       </div>
 
-      <button ng-click="save()" ng-disabled="newViewForm.$invalid" class="btn btn-primary">Save</button>
-      <button ng-click="delete()" ng-show="view.id" class="btn btn-danger">Delete</button>
+      <button ng-click="EditCtrl.save()" ng-disabled="newViewForm.$invalid" class="btn btn-primary">Save</button>
+      <button ng-click="EditCtrl.delete()" ng-show="EditCtrl.view.id" class="btn btn-danger">Delete</button>
 
     </form>
   </div>

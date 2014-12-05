@@ -3,16 +3,16 @@ var tramControllers = angular.module('tramControllers', ['ngRoute']);
 tramApp.config(function($routeProvider) {
   $routeProvider
     .when('/new', {
-      controller:'EditCtrl',
+      controller:'EditCtrl as EditCtrl',
       templateUrl:'edit.html'
     })
     .when('/view/:viewId', {
-      controller:'TramCtrl',
+      controller:'TramCtrl as TramCtrl',
       templateUrl:'tram.html'
     })
 
     .when('/edit/:viewId', {
-      controller:'EditCtrl',
+      controller:'EditCtrl as EditCtrl',
       templateUrl:'edit.html'
     })
 
@@ -21,41 +21,43 @@ tramApp.config(function($routeProvider) {
     });
 })
 
-tramApp.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Tram', 'storage', function($scope, $location, $routeParams, Tram, storage) {
+tramApp.controller('EditCtrl', ['$location', '$routeParams', 'Tram', 'storage', function($location, $routeParams, Tram, storage) {
   // actually no need for much here yet
 
-  $scope.viewId = $routeParams.viewId;
-  $scope.view = _.clone(storage.getView($routeParams.viewId));
+  var EditCtrl = this;
 
-  $scope.addStation = function() {
-    console.log("Adding station to view: ", $scope.view);
-    $scope.view.stations.push({keywords: ''});
+  EditCtrl.viewId = $routeParams.viewId;
+  EditCtrl.view = _.clone(storage.getView($routeParams.viewId));
+
+  EditCtrl.addStation = function() {
+    console.log("Adding station to view: ", EditCtrl.view);
+    EditCtrl.view.stations.push({keywords: ''});
   }
 
-  $scope.removeStation = function(index) {
-    console.log("Removing station from view: ", $scope.view);
-    $scope.view.stations.splice(index, 1);
+  EditCtrl.removeStation = function(index) {
+    console.log("Removing station from view: ", EditCtrl.view);
+    EditCtrl.view.stations.splice(index, 1);
   }
 
-  $scope.save = function() {
-    console.log("Saving ", $scope.view);
-    storage.saveView($scope.view);
-    $location.path('/view/' + $scope.view.id);
+  EditCtrl.save = function() {
+    console.log("Saving ", EditCtrl.view);
+    storage.saveView(EditCtrl.view);
+    $location.path('/view/' + EditCtrl.view.id);
   }
 
-  $scope.delete = function() {
-    console.log("Deleting ", $scope.view);
-    storage.deleteView($scope.view);
-    $scope.view = null;
+  EditCtrl.delete = function() {
+    console.log("Deleting ", EditCtrl.view);
+    storage.deleteView(EditCtrl.view);
+    EditCtrl.view = null;
     $location.path('/');
   }
 
-  $scope.getStations = function(text) {
+  EditCtrl.getStations = function(text) {
     console.log("Autocomplete: ", text);
 
     return Tram.autocomplete({query:text}).$promise.then(function(stations){
       console.log("Got stations: ", stations);
-      
+
       var result = _.map(stations.stations, function(station){
         return {
           name: station.name,
@@ -70,16 +72,17 @@ tramApp.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Tram', '
 }]);
 
 tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage', 'Tram', function($scope, $routeParams, $timeout, storage, Tram) {
+  var TramCtrl = this;
 
-  $scope.viewId = $routeParams.viewId;
-  $scope.refreshInterval = 10000;
+  var refreshInterval = 10000;
+  TramCtrl.viewId = $routeParams.viewId;
 
   /**
    * We initialize the model with nothing
    */
-  $scope.trams;
+  TramCtrl.trams;
 
-  /*$scope.hjs = HueJS({
+  /*TramCtrl.hjs = HueJS({
             ipAddress:"10.10.0.195",
                 devicetype:"test user",
                 username: "newdeveloper"
@@ -89,18 +92,18 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
    * We regularly update the model with the new departures.
    */
   (function update() {
-    $timeout(update, $scope.refreshInterval);
-    console.log('Updating data. Current data, trams: ', $scope.trams);
+    $timeout(update, refreshInterval);
+    console.log('Updating data. Current data, trams: ', TramCtrl.trams);
 
     // if the view is set
-    if ($scope.viewId) {
+    if (TramCtrl.viewId) {
       var currentView = storage.getView($routeParams.viewId);
 
       async.map(currentView.stations, function(station, callback) {
         Tram.queryStation({station: station.stat.id}, function(trams) {
           console.log("Handling answer for station: ", station.stat.name, ", answer: ", trams);
 
-          // we get the trams that interest us 
+          // we get the trams that interest us
           var filteredTrams = _.filter(trams, function(tram) {
             var keywords = station.keywords.trim().length == 0 ? [] : station.keywords.split(',')
 
@@ -131,12 +134,12 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
         console.log("Filtered trams sorted: ", filteredTrams);
 
         // this is to initialize scope.trams if it's not done yet (first time this is executed)
-        if (!$scope.trams) {
-          $scope.trams = filteredTrams
+        if (!TramCtrl.trams) {
+          TramCtrl.trams = filteredTrams
         }
 
         // we extend the tram list with the new tram stuff
-        _.each($scope.trams, function(element, index){
+        _.each(TramCtrl.trams, function(element, index){
           _.extend(element, filteredTrams[index]);
         })
 
