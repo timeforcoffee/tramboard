@@ -61,12 +61,12 @@ body {
 .night {
 	color: #fff100;
 	background-color: black;
-	font-size: 32px;
 	border: none;
 }
 
 .small {
-	font-size: 32px;
+	font-size: 2em;
+	padding: 14px 0 14px 0;
 }
 
 .number-2 {
@@ -208,10 +208,6 @@ body {
 	padding-right: 0;
 }
 
-.time.small div {
-	font-size: 3em;
-}
-
 .time div {
 	font-size: 4em;
 	font-weight: bold;
@@ -222,17 +218,17 @@ body {
 	display: none;
 }
 
-.time0 img,
-.time-1 img,
-.time-2 img {
+.time00 img,
+.time-1-1 img,
+.time-1-2 img {
 	display: inline;
 	position: relative;
 	right: -6px;
 }
 
-.time0 div,
-.time-1 div,
-.time-2 div {
+.time00 div,
+.time-1-1 div,
+.time-1-2 div {
 	display: none;
 }
 

@@ -52,7 +52,7 @@ server.route({
 			          var special;
 			          var number = entry.pr.replace(/ /g, '');
 			          if (number.charAt(0) == "N") special = "night";
-			          if (number.length == 3) special += " small";
+			          if (number.length >= 3) special += " small";
 
 			          if (!departure || !departure.year()) departure = undelayed;
 

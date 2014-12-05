@@ -15,9 +15,9 @@
           <div class="undelayed">{{(tram.delay_in_minutes > 0) ? (tram.undelayed_departure.hours()+':'+(tram.undelayed_departure.minutes().toString().length == 1 ? '0'+tram.undelayed_departure.minutes() : tram.undelayed_departure.minutes())) : ''}}</div>
         </td>
 
-        <td class="text-right time time{{tram.in_minutes}} {{tram.in_hours != 0 ? 'small' : ''}}">
+        <td class="text-right time time{{tram.in_hours}}{{tram.in_minutes}}">
           <img src="images/tram.png"></img>
-          <div>{{tram.in_hours != 0 ? tram.in_hours+':' : ''}}{{tram.in_hours != 0 && tram.in_minutes < 10 ? '0' : ''}}{{tram.in_minutes}}</div>
+          <div>{{tram.in_hours > 0 ? '> 59' : (tram.in_hours != 0 && tram.in_minutes < 10 ? '0' : '') + tram.in_minutes}}</div>
         </td>
 
       </tr>
