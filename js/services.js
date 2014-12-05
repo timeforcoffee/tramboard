@@ -116,7 +116,7 @@ tramServices.factory('storage', ['localStorageService', 'Tram',
       }
 
       if (getView(id) && oldSlug != id) {
-        return newSlug(name, index + 1);
+        return newSlug(name, oldSlug, index + 1);
       }
       else {
         return id;

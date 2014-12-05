@@ -19,7 +19,7 @@
 
             <div class="form-group">
               <label for="viewStation[{{$index}}]">Station</label>
-              <input id="viewStation[{{$index}}]" ng-model="EditCtrl.station.stat" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as EditCtrl.station.name for station in EditCtrl.getStations($viewValue) | filter:$viewValue" typeahead-loading="EditCtrl.loadingStations" required></input>
+              <input id="viewStation[{{$index}}]" ng-model="station.stat" type="text" class="form-control" placeholder="Station name (start typing to get suggestions)" typeahead="station as station.name for station in EditCtrl.getStations($viewValue) | filter:$viewValue" typeahead-loading="EditCtrl.loadingStations" required autocomplete="off"></input>
               <i ng-show="EditCtrl.loadingStations" class="glyphicon glyphicon-refresh"></i>
             </div>
 
