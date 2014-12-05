@@ -1,10 +1,10 @@
 <!-- these are all the configured station tabs -->
-<tabs current-view="{{viewId}}" mode="view"></tabs>
+<tabs current-view="{{TramCtrl.viewId}}" mode="view"></tabs>
 
 <div class="col-xs-12">
   <div class="row">
     <table class="tram-table col-xs-12">
-      <tr class="tram-row" ng-repeat="tram in (trams | limitTo:8)">
+      <tr class="tram-row" ng-repeat="tram in (TramCtrl.trams | limitTo:8)">
 
         <td class="number-cell"><span class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</span></td>
 
