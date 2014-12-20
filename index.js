@@ -5,8 +5,15 @@ var needle = require('needle');
 var Joi    = require('joi');
 var _      = require('underscore');
 var moment = require('moment-timezone');
+var Path   = require('path');
 
-var server = new Hapi.Server(+process.env.PORT || 8000, '0.0.0.0');
+var server = new Hapi.Server(+process.env.PORT || 8000, '0.0.0.0')
+server.views({
+    engines: {
+        html: require('handlebars')
+    },
+    path: __dirname
+});
 
 server.route({
 	method: 'GET',
@@ -99,6 +106,14 @@ server.route({
 		}
 	}
 })
+
+server.route({
+    method: 'GET',
+    path: '/',
+    handler: function (request, reply) {
+        reply.view('index', { tracking: process.env.GA_TRACKING || 'dummy' });
+    }
+});
 
 server.route({
     method: 'GET',
