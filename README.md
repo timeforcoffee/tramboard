@@ -4,7 +4,7 @@ Tramboard is a station board for the trams and public transport in Switzerland. 
 
 Here is a quick look:
 
-![Tramboard app](/tramboard.png =400px)
+<img src="tramboard.png" alt="Tramboard app" style="text-align:center;height:400px;">)
 
 # How to use
 
