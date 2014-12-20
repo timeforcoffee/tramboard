@@ -2,8 +2,9 @@
 
 Tramboard is a station board for the trams and public transport in Switzerland. It is optimized to work for the city of Zurich and will indicate real-time information using the ZVV Mobile API. It will work as well for other towns in Switzerland but then the infos will not be real-time.
 
-Here is a quick look :
-![Tramboard app](/tramboard.png)
+Here is a quick look:
+
+![Tramboard app](/tramboard.png =400px)
 
 # How to use
 
