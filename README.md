@@ -25,5 +25,5 @@ You can also use [gulp](http://gulpjs.com/) to run the app using [browser sync](
 
 ```bash
 npm install --global gulp
-gulp ; open http://localhost:7000
+gulp
 ```
