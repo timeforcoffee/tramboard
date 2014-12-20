@@ -1,16 +1,15 @@
-<ul class="nav nav-tabs">
-  <li ng-repeat="view in TabsCtrl.possibleViews()" class="{{TabsCtrl.currentView == view.id ? 'active' : ''}}">
-    <a href="#/view/{{view.id}}">{{view.name}}</a>
-    <span ng-show="TabsCtrl.currentView == view.id">
-      <a href="#/{{TabsCtrl.mode == 'edit' ? 'view' : 'edit'}}/{{view.id}}">
-        <span class="glyphicon glyphicon-{{TabsCtrl.mode == 'edit' ? 'share-alt' : 'pencil'}}"></span>
-      </a>
-    </span>
+<ul class="nav nav-pills">
+  <li ng-repeat="view in TabsCtrl.possibleViews()" class="{{TabsCtrl.viewSelection[view.id] || TabsCtrl.currentView == view.id ? 'active' : ''}}">
+    <a href="#/view/{{TabsCtrl.createPath(view.id)}}">{{view.name}}</a>
+
+    <a href="#/{{TabsCtrl.mode == 'edit' ? 'view' : 'edit'}}/{{view.id}}">
+      <span class="glyphicon glyphicon-{{TabsCtrl.mode == 'edit' ? 'share-alt' : 'pencil'}}"></span>
+    </a>
+
   </li>
-  <li class="{{TabsCtrl.currentView == undefined ? 'active' : ''}}">
+  <li class="{{!TabsCtrl.currentView && TabsCtrl.mode == 'edit' ? 'active' : ''}}">
     <a href="#/new">
       <span class="glyphicon glyphicon-plus"></span>
     </a>
   </li>
-
 </ul>

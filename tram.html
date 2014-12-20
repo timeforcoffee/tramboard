@@ -1,10 +1,11 @@
 <!-- these are all the configured station tabs -->
-<tabs current-view="{{TramCtrl.viewId}}" mode="view"></tabs>
+<tabs view-selection-string="{{TramCtrl.viewSelectionString}}" mode="view"></tabs>
 
-<div class="col-xs-12">
-  <div class="row">
-    <table class="tram-table col-xs-12">
-      <tr class="tram-row" ng-repeat="tram in (TramCtrl.trams | limitTo:8)">
+<div class="row">
+  <div class="{{TramCtrl.viewSelection().length > 1 ? 'multi-col' : ''}} col-sm-{{TramCtrl.viewSelection().length > 1 ? 6 : 12}} col-md-{{TramCtrl.viewSelection().length > 1 ? 6 : 12}}" ng-repeat="view in (TramCtrl.viewSelection())">
+
+    <table class="tram-table">
+      <tr class="tram-row" ng-repeat="tram in (TramCtrl.trams[view] | limitTo:12)">
 
         <td class="number-cell"><span class="number number-{{tram.number}} {{tram.special}}">{{tram.number}}</span></td>
 

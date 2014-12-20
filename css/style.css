@@ -1,5 +1,7 @@
 body {
 	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .nav {
@@ -27,8 +29,10 @@ body {
 
 .tram-table {
 	display: table;
+	table-layout: fixed;
 	padding: 0;
 	margin-top: 4px;
+	width: 100%;
 }
 
 .tram-table td {
@@ -56,6 +60,7 @@ body {
 
 .station {
 	font-size: 1.8em;
+	word-wrap: break-word;
 }
 
 .night {
@@ -206,6 +211,7 @@ body {
 .time {
 	line-height: 72px;
 	padding-right: 0;
+	width: 96px;
 }
 
 .time div {
@@ -236,6 +242,7 @@ body {
 	line-height: 72px;
 	font-size: 2.5em;
 	text-align: right;
+	width: 96px;
 }
 
 .departure .undelayed {
@@ -250,6 +257,28 @@ body {
 .settings {
 	margin-top: 4px;
 }
+
+
+@media (min-width: 768px) and (max-width: 992px) {
+	.multi-col .station {
+		font-size: 1.3em;
+	}
+
+	.multi-col .time {
+		width: 56px;
+	}
+
+	.multi-col .time div {
+		font-size: 3em;
+	}
+
+	.multi-col .departure {
+		font-size: 2em;
+		line-height: 56px;
+		width: 72px;
+	}
+}
+
 
 /* Station specific styles: 
    Colors for Hirschi rows */

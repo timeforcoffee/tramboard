@@ -51,6 +51,9 @@ server.route({
 
 			          var special = "";
 			          var number = entry.pr.replace(/ /g, '');
+			          number = number.replace('&nbsp;', '');
+			          number = number.replace('Bus', '');
+
 			          if (number.charAt(0) == "N") special = "night";
 			          if (number.length >= 3) special += " small";
 
@@ -65,6 +68,8 @@ server.route({
 			            case "Trm":
 			              name = "T " + entry.pr
 			              break;
+			            case "Bus":
+			              name = number
 			            default:
 			              name = 'other';
 			              break;

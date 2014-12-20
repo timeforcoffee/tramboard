@@ -1,4 +1,4 @@
-<tabs current-view="{{viewId}}" mode="edit"></tabs>
+<tabs current-view="{{EditCtrl.view.id}}" mode="edit"></tabs>
 
 <div class="row settings">
 
@@ -25,7 +25,7 @@
 
             <div class="form-group">
               <label for="viewKeywords[{{$index}}]">Keywords</label>
-              <input id="viewKeywords[{{$index}}]" ng-model="EditCtrl.station.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
+              <input id="viewKeywords[{{$index}}]" ng-model="station.keywords" type="text" class="form-control" placeholder="Comma-separated list of keywords, used to filter the connections."></input>
             </div>
 
             <div>

@@ -22,5 +22,11 @@
     "joi": "~4.8.1",
     "underscore": "~1.7.0",
     "moment-timezone": "~0.2.5"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.10",
+    "browser-sync": "~1.8.1",
+    "nodemon": "~1.2.1",
+    "gulp-nodemon": "~1.0.4"
   }
 }
