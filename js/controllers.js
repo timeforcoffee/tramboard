@@ -20,8 +20,11 @@ tramApp.config(function($routeProvider) {
     });
 })
 
-tramApp.controller('EditCtrl', ['$location', '$routeParams', 'Tram', 'storage', function($location, $routeParams, Tram, storage) {
-  // actually no need for much here yet
+tramApp.controller('EditCtrl', ['$location', '$window', '$scope', '$routeParams', 'Tram', 'storage', function($location, $window, $scope, $routeParams, Tram, storage) {
+
+  $scope.$on('$viewContentLoaded', function(event) {
+    $window.ga('send', 'pageview', { page: $location.path() });
+  });
 
   var EditCtrl = this;
   EditCtrl.view = _.clone(storage.getView($routeParams.viewId));
@@ -39,12 +42,20 @@ tramApp.controller('EditCtrl', ['$location', '$routeParams', 'Tram', 'storage', 
   EditCtrl.save = function() {
     console.log("Saving ", EditCtrl.view);
     storage.saveView(EditCtrl.view);
+
+    // dimension2 is the number of stations
+    $window.ga('send', 'event', 'view', 'add', {dimension2: EditCtrl.view.stations.length, page: $location.path() });
+
     $location.path('/view/' + EditCtrl.view.id);
   }
 
   EditCtrl.delete = function() {
     console.log("Deleting ", EditCtrl.view);
     storage.deleteView(EditCtrl.view);
+    
+    // dimension2 is the number of stations
+    $window.ga('send', 'event', 'view', 'delete', {dimension2: EditCtrl.view.stations.length,  page: $location.path() });
+
     EditCtrl.view = null;
     $location.path('/');
   }
@@ -68,7 +79,14 @@ tramApp.controller('EditCtrl', ['$location', '$routeParams', 'Tram', 'storage', 
 
 }]);
 
-tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage', 'Tram', function($scope, $routeParams, $timeout, storage, Tram) {
+tramApp.controller('TramCtrl', ['$location', '$window', '$scope', '$routeParams', '$timeout', 'storage', 'Tram', function($location, $window, $scope, $routeParams, $timeout, storage, Tram) {
+
+  $scope.$on('$viewContentLoaded', function(event) {
+    // dimension3 is the number of views on the page
+    $window.ga('send', 'pageview', { page: $location.path(), dimension3: TramCtrl.viewSelection().length });
+  });
+
+
   var TramCtrl = this;
   var refreshInterval = 10000;
 
@@ -105,6 +123,17 @@ tramApp.controller('TramCtrl', ['$scope', '$routeParams', '$timeout', 'storage',
       async.map(views, function(currentView, viewSelectionCallback) {
 
         async.map(currentView.stations, function(station, callback) {
+          // dimension1 is the station queried
+          // dimension2 is the number of stations in a view
+          // dimension3 is the number of views on the page
+          $window.ga('send', 'event', 'station', 'query', { 
+            dimension1: station.stat.name + '/' + station.stat.id, 
+            dimension2: currentView.stations.length, 
+            // we don't send it here because if would be wrong 
+            // dimension3: views.length, 
+            page: $location.path() 
+          });
+
           Tram.queryStation({station: station.stat.id}, function(trams) {
             console.log("Handling answer for station: ", station.stat.name, ", answer: ", trams);
 
